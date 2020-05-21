@@ -30,20 +30,22 @@ defmodule BathysphereLiveWeb.Map.Space do
     ~L"""
     <div>
       <%= for action <- @actions do %>
-        <%= case action do %>
-          <% {:discovery, :fish, _} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.Fish) %>
-          <% {:discovery, :octopus, _} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.Octopus) %>
-          <% {:stress, value, used?} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.Stress, value: value, used?: used?) %>
-          <% {:oxygen, value, used?} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.Oxygen, value: value, used?: used?) %>
-          <% {:damage, value, used?} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.Damage, value: value, used?: used?) %>
-          <% {:ocean_floor, value, used?} -> %>
-            <%= live_component(@socket, BathysphereLiveWeb.Map.Space.OceanFloor, value: value, used?: used?) %>
-        <% end %>
+        <%=
+          case action do
+            {:discovery, :fish, _} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.Fish)
+            {:discovery, :octopus, _} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.Octopus)
+            {:stress, value, used?} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.Stress, value: value, used?: used?)
+            {:oxygen, value, used?} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.Oxygen, value: value, used?: used?)
+            {:damage, value, used?} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.Damage, value: value, used?: used?)
+            {:ocean_floor, value, used?} ->
+              live_component(@socket, BathysphereLiveWeb.Map.Space.OceanFloor, value: value, used?: used?)
+          end
+        %>
       <% end %>
     </div>
     """
