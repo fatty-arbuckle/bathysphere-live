@@ -1,48 +1,64 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace-of-mind from prototype to production</p>
+<section class="hero">
+  <div class="hero-body">
 
-  <form phx-change="suggest" phx-submit="search">
-    <input type="text" name="q" value="<%= @query %>" placeholder="Live dependency search" list="results" autocomplete="off"/>
-    <datalist id="results">
-      <%= for {app, _vsn} <- @results do %>
-        <option value="<%= app %>"><%= app %></option>
-      <% end %>
-    </datalist>
-    <button type="submit" phx-disable-with="Searching...">Go to Hexdocs</button>
-  </form>
-</section>
+    <div class="container has-text-centered">
+      <div class="columns">
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
+        <div class="column has-background-danger">
+
+          <nav class="level has-background-primary">
+            <p class="level-item has-text-centered">
+              <span class="is-info">data</span>
+            </p>
+            <p class="level-item has-text-centered">
+              <span class="is-info">data</span>
+            </p>
+            <p class="level-item has-text-centered">
+              <span class="is-info">data</span>
+            </p>
+            <p class="level-item has-text-centered">
+              <span class="is-info">data</span>
+            </p>
+          </nav>
+
+
+          <div class="rows">
+            <div class="row">
+              <div class="columns">
+                <div class="column has-background-success">
+                  Oxygen
+                </div>
+                <div class="column has-background-info">
+                  Stress
+                </div>
+                <div class="column has-background-warning">
+                  Damage
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="columns">
+                <div class="column has-background-success">
+                  First.First column
+                </div>
+                <div class="column has-background-info">
+                  First.Second column
+                </div>
+                <div class="column has-background-warning">
+                  First.Third column
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column has-background-warning">
+          <%=
+            live_component(@socket, BathysphereLiveWeb.MapComponent, map: @game_state.map, position: @game_state.position)
+          %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </section>
