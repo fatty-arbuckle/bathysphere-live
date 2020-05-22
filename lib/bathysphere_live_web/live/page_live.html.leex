@@ -4,22 +4,25 @@
     <div class="container has-text-centered">
       <div class="columns">
 
-        <div class="column has-background-danger">
+        <div class="column">
 
-          <nav class="level has-background-primary">
-            <p class="level-item has-text-centered">
-              <span class="is-info">data</span>
-            </p>
-            <p class="level-item has-text-centered">
-              <span class="is-info">data</span>
-            </p>
-            <p class="level-item has-text-centered">
-              <span class="is-info">data</span>
-            </p>
-            <p class="level-item has-text-centered">
-              <span class="is-info">data</span>
-            </p>
-          </nav>
+          <div class="box">
+            <%=
+              live_component(
+                @socket,
+                BathysphereLiveWeb.OverviewComponent,
+                state: @game_state.state,
+                dice_pool_size: @game_state.dice_pool_size,
+                dice_pool: @game_state.dice_pool,
+                score: @game_state.score,
+                fish_points: @game_state.fish_points,
+                octopus_points: @game_state.octopus_points
+              )
+            %>
+          </div>
+
+
+
 
 
           <div class="rows">
@@ -52,7 +55,7 @@
           </div>
         </div>
 
-        <div class="column has-background-warning">
+        <div class="column">
           <%=
             live_component(@socket, BathysphereLiveWeb.MapComponent, map: @game_state.map, position: @game_state.position)
           %>

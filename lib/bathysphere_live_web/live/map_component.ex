@@ -7,18 +7,18 @@ defmodule BathysphereLiveWeb.MapComponent do
 
   def render(assigns) do
     ~L"""
-    <div class="rows">
+    <div class="rows map-background">
       <%= for {{type, data} = space, idx} <- Enum.with_index(@map) do %>
         <div class="row">
           <div class="columns">
             <div class="column is-1 has-text-centered"></div>
 
-            <div class="column is-10 <%= if idx == @position, do: "has-background-danger", else: "has-background-info" %> has-text-centered">
+            <div class="column is-10 has-text-centered">
               <%= case type do
                 :start ->
-                  live_component(@socket, BathysphereLiveWeb.Map.Start)
+                  live_component(@socket, BathysphereLiveWeb.Map.Start, current?: idx == @position)
                 :space ->
-                  live_component(@socket, BathysphereLiveWeb.Map.Space, space: space)
+                  live_component(@socket, BathysphereLiveWeb.Map.Space, space: space, current?: idx == @position)
                 :depth_zone ->
                   live_component(@socket, BathysphereLiveWeb.Map.DepthZone)
               end %>

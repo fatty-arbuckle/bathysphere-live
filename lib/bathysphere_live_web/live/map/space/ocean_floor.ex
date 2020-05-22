@@ -3,7 +3,17 @@ defmodule BathysphereLiveWeb.Map.Space.OceanFloor do
 
   def render(assigns) do
     ~L"""
-      <span>OCEAN FLOOR <%= @value %></span>
+    <span
+      class="is-size-3"
+      has-tooltip-multiline
+      data-tooltip="Ocean Floor: <%= pretty_value(@value) %>"
+    >
+      <i class="fas fa-anchor"></i>
+      <%= pretty_value(@value) %>
+    </span>
     """
   end
+
+  defp pretty_value(value) when value > 0, do: "+#{value}"
+  defp pretty_value(value), do: value
 end

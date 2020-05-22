@@ -3,7 +3,12 @@ defmodule BathysphereLiveWeb.Map.Space.Octopus do
 
   def render(assigns) do
     ~L"""
-      OCTOPUS
+    <span
+      has-tooltip-multiline
+      data-tooltip="Octopus Discovery"
+    >
+      <i class="fas fa-3x fa-wind"></i>
+    </span>
     """
   end
 end

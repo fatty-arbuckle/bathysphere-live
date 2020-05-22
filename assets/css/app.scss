@@ -27,3 +27,13 @@ $input-shadow: none;
 
 //Import Bulma
 @import 'bulma';
+@import 'bulma-tooltip';
+
+hr {
+  border: 5px solid $dark;
+  border-radius: 5px;
+}
+
+.map-background {
+  background: linear-gradient($grey, $grey) no-repeat center/20px 99%;
+}

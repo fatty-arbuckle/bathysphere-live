@@ -3,7 +3,12 @@ defmodule BathysphereLiveWeb.Map.DepthZone do
 
   def render(assigns) do
     ~L"""
+    <span
+      has-tooltip-multiline
+      data-tooltip="Depth zone"
+    >
       <hr>
+    </span>
     """
   end
 end

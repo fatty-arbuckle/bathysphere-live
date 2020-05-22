@@ -7,7 +7,14 @@ defmodule BathysphereLiveWeb.Map.Space.Damage do
   end
   def render(assigns) do
     ~L"""
-      <span>DAMAGE <%= @value %></span>
+    <span
+      class="is-size-3"
+      has-tooltip-multiline
+      data-tooltip="Damage: <%= @value %>"
+    >
+      <i class="fas fa-exclamation-circle"></i>
+      <%= @value %>
+    </span>
     """
   end
 end

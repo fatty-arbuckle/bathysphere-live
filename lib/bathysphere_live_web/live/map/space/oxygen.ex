@@ -7,7 +7,14 @@ defmodule BathysphereLiveWeb.Map.Space.Oxygen do
   end
   def render(assigns) do
     ~L"""
-      <span>OXYGEN <%= @value %></span>
+    <span
+      class="is-size-3"
+      has-tooltip-multiline
+      data-tooltip="Oxygen: <%= @value %>"
+    >
+      <i class="fas fa-soap"></i>
+      <%= @value %>
+    </span>
     """
   end
 end
