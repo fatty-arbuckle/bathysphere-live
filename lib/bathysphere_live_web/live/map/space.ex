@@ -23,7 +23,7 @@ defmodule BathysphereLiveWeb.Map.Space do
       has-tooltip-multiline
       data-tooltip="Empty space"
     >
-      <span class="is-size-3 has-text-white">
+      <span class="is-size-3 has-text-grey-lighter">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
