@@ -1,17 +1,6 @@
 defmodule BathysphereLiveWeb.OverviewComponent do
   use Phoenix.LiveComponent
 
-
-  # def update(
-  #   %{
-  #     state: state,
-  #     dice_pool_size: dice_pool_size,
-  #     dice_pool: dice_pool,
-  #     score: score,
-  #     fish_points: fish_points, octopus_points: octopus_points} = _assigns, socket) do
-  #   { :ok, assign(socket, state: state, dice_pool_size: dice_pool_size, dice_pool: dice_pool, score: score, fish_points: fish_points, octopus_points: octopus_points) }
-  # end
-
   def render(assigns) do
     ~L"""
       <div class="box has-background-grey-lighter">
@@ -22,38 +11,38 @@ defmodule BathysphereLiveWeb.OverviewComponent do
         <% end %>
 
         <%= for _value <- 0..(@dice_pool_size - Enum.count(@dice_pool) - 1) do %>
-          <span class="is-size-1">
+          <span class="is-size-1 ">
             <i class="fas fa-square"></i>
           </span>
         <% end %>
       </div>
 
       <div class="box has-background-grey-lighter has-text-left">
-        <span class="is-size-3 has-text-info">
+        <span class="has-text-info">
           Score:
         </span>
-        <span class="is-size-3">
+        <span class="">
          <%= @score %>
         </span>
       </div>
 
       <div class="box has-text-left has-background-grey-lighter">
-        <span class="is-size-3 has-text-info">
+        <span class="has-text-info">
           <i class="fas fa-fish"></i>
         </span>
         <%= for {value, idx} <- Enum.with_index(@fish_points) do %>
-          <span class="is-size-3 <%= if idx < @fish_count, do: "has-text-success", else: "" %>">
+          <span class="<%= if idx < @fish_count, do: "has-text-success", else: "" %>">
             <%= pretty_value(value) %>
           </span>
         <% end %>
       </div>
 
       <div class="box has-text-left has-background-grey-lighter">
-        <span class="is-size-3 has-text-info">
+        <span class="has-text-info">
           <i class="fas fa-wind"></i>
         </span>
         <%= for {value, idx} <- Enum.with_index(@octopus_points) do %>
-        <span class="is-size-3 <%= if idx < @octopus_count, do: "has-text-success", else: "" %>">
+        <span class="<%= if idx < @octopus_count, do: "has-text-success", else: "" %>">
             <%= pretty_value(value) %>
           </span>
         <% end %>

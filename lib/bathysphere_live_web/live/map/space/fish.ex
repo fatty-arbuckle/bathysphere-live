@@ -7,7 +7,7 @@ defmodule BathysphereLiveWeb.Map.Space.Fish do
         has-tooltip-multiline
         data-tooltip="Fish Discovery"
       >
-        <i class="fas fa-3x fa-fish"></i>
+        <i class="fas fa-fish"></i>
       </span>
     """
   end

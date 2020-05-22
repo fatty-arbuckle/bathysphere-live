@@ -7,7 +7,7 @@ defmodule BathysphereLiveWeb.Map.Space.Octopus do
       has-tooltip-multiline
       data-tooltip="Octopus Discovery"
     >
-      <i class="fas fa-3x fa-wind"></i>
+      <i class="fas fa-wind"></i>
     </span>
     """
   end

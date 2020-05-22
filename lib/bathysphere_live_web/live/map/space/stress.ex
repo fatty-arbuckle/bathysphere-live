@@ -8,7 +8,7 @@ defmodule BathysphereLiveWeb.Map.Space.Stress do
   def render(assigns) do
     ~L"""
       <span
-        class="is-size-3"
+        class=""
         has-tooltip-multiline
         data-tooltip="Stress: <%= @value %>"
       >

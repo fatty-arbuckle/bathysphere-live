@@ -23,7 +23,7 @@ defmodule BathysphereLiveWeb.Map.Space do
       has-tooltip-multiline
       data-tooltip="Empty space"
     >
-      <span class="is-size-3 has-text-grey-lighter">
+      <span class="has-text-grey-lighter">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
@@ -34,7 +34,7 @@ defmodule BathysphereLiveWeb.Map.Space do
     <div class="box <%= current_format(@current?) %>">
       <%= for { action, idx } <- Enum.with_index(@actions) do %>
         <%= if idx > 0 do %>
-          <span class="is-size-3 has-text-weight-bold"> / </span>
+          <span class="has-text-weight-bold"> / </span>
         <% end %>
         <%=
           case action do

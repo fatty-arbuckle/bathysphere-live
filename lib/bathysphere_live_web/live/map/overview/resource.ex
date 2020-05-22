@@ -4,11 +4,11 @@ defmodule BathysphereLiveWeb.Map.Overview.Resource do
   def render(assigns) do
     ~L"""
     <div class="box has-text-left has-background-grey-lighter">
-      <div class="is-size-3 has-text-info">
+      <div class="has-text-info">
         <%= @label %>
       </div>
       <%= for {_, used?} <- @resource do %>
-        <span class="is-size-3 <%= if !used?, do: "has-text-success", else: "" %>">
+        <span class="<%= if !used?, do: "has-text-success", else: "" %>">
         <i class="fas <%= @icon %>"></i>
         </span>
       <% end %>
