@@ -88,6 +88,8 @@ defmodule BathysphereLiveWeb.PageLive do
     position: 0,
     remaining: 0,
     direction: 0,
+    fish_count: 2,
+    octopus_count: 3,
     score: 0,
     oxygen: Enum.map(0..12, fn _ -> {:oxygen, false} end),
     stress: Enum.map(0..20, fn _ -> {:stress, false} end),
