@@ -12,7 +12,7 @@ defmodule BathysphereLiveWeb.Map.Space.Damage do
       has-tooltip-multiline
       data-tooltip="Damage: <%= @value %>"
     >
-      <i class="fas fa-exclamation-circle"></i>
+      <i class="fas fa-ambulance"></i>
       <%= @value %>
     </span>
     """

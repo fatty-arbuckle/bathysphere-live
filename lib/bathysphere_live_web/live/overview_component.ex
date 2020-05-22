@@ -21,7 +21,7 @@ defmodule BathysphereLiveWeb.OverviewComponent do
           </span>
         <% end %>
 
-        <%= for value <- 0..(@dice_pool_size - Enum.count(@dice_pool) - 1) do %>
+        <%= for _value <- 0..(@dice_pool_size - Enum.count(@dice_pool) - 1) do %>
           <span class="is-size-1">
             <i class="fas fa-square"></i>
           </span>
@@ -29,8 +29,11 @@ defmodule BathysphereLiveWeb.OverviewComponent do
       </div>
 
       <div class="box has-background-grey-lighter has-text-left">
+        <span class="is-size-3 has-text-info">
+          Score:
+        </span>
         <span class="is-size-3">
-          Score: <%= @score %>
+         <%= @score %>
         </span>
       </div>
 
@@ -46,7 +49,7 @@ defmodule BathysphereLiveWeb.OverviewComponent do
       </div>
 
       <div class="box has-text-left has-background-grey-lighter">
-      <span class="is-size-3 has-text-info">
+        <span class="is-size-3 has-text-info">
           <i class="fas fa-wind"></i>
         </span>
         <%= for {value, idx} <- Enum.with_index(@octopus_points) do %>
@@ -55,6 +58,10 @@ defmodule BathysphereLiveWeb.OverviewComponent do
           </span>
         <% end %>
       </div>
+
+      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @oxygen, label: "Oxygen", icon: "fa-soap") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @stress, label: "Stress", icon: "fa-exclamation-circle") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-ambulance") %>
 
     """
   end

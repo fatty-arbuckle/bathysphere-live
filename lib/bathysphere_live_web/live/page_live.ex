@@ -91,9 +91,9 @@ defmodule BathysphereLiveWeb.PageLive do
     fish_count: 2,
     octopus_count: 3,
     score: 0,
-    oxygen: Enum.map(0..12, fn _ -> {:oxygen, false} end),
-    stress: Enum.map(0..20, fn _ -> {:stress, false} end),
-    damage: Enum.map(0..6, fn _ -> {:damage, false} end),
+    oxygen: Enum.map(0..2, fn _ -> {:oxygen, true} end) ++ Enum.map(0..9, fn _ -> {:oxygen, false} end),
+    stress: Enum.map(0..4, fn _ -> {:stress, true} end) ++ Enum.map(0..14, fn _ -> {:stress, false} end),
+    damage: Enum.map(0..1, fn _ -> {:damage, true} end) ++ Enum.map(0..4, fn _ -> {:damage, false} end),
     fish_points: [+2, +3, +4, +5, +6, +7],
     octopus_points: [+1, +2, +3, +4, +8, +12]
   }
