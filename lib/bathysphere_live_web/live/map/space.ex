@@ -12,7 +12,6 @@ defmodule BathysphereLiveWeb.Map.Space do
       has-tooltip-multiline
       data-tooltip="Marked space"
     >
-      MARKED
     </div>
     """
   end
