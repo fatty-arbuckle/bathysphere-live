@@ -8,9 +8,9 @@ defmodule BathysphereLiveWeb.PageLive do
     map: [
       { :start, %{} },
       { :space, %{ actions: [{:discovery, :fish, false}], marked?: false } },
-      { :space, %{ actions: [{:stress, -1, false}], marked?: false } },
+      { :space, %{ actions: [{:stress, -1, false}], marked?: true } },
       { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, false}], marked?: false } },
-      { :space, %{ actions: [], marked?: false } },
+      { :space, %{ actions: [], marked?: true } },
       { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, false}], marked?: false } },
       { :space, %{ actions: [], marked?: false } },
       { :depth_zone, %{} },
@@ -85,7 +85,7 @@ defmodule BathysphereLiveWeb.PageLive do
       { :space, %{ actions: [{:discovery, :octopus, false}], marked?: false } },
       { :space, %{ actions: [{:ocean_floor, +6, false}], marked?: false } }
     ],
-    position: 0,
+    position: 4,
     remaining: 0,
     direction: 0,
     fish_count: 2,

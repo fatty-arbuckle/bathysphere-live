@@ -8,7 +8,7 @@ defmodule BathysphereLiveWeb.Map.Space do
   def render(%{marked?: true} = assigns) do
     ~L"""
     <div
-      class="box has-background-grey"
+      class="box <%= if @current?, do: "has-background-info", else: "has-background-grey" %>"
       has-tooltip-multiline
       data-tooltip="Marked space"
     >
