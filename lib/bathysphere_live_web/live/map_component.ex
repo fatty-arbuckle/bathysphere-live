@@ -8,7 +8,7 @@ defmodule BathysphereLiveWeb.MapComponent do
   def render(assigns) do
     ~L"""
     <div class="rows map-background">
-      <%= for {{type, data} = space, idx} <- Enum.with_index(@map) do %>
+      <%= for {{type, _data} = space, idx} <- Enum.with_index(@map) do %>
         <div class="row">
           <div class="columns">
             <div class="column is-1 has-text-centered"></div>

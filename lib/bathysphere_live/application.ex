@@ -12,9 +12,10 @@ defmodule BathysphereLive.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: BathysphereLive.PubSub},
       # Start the Endpoint (http/https)
-      BathysphereLiveWeb.Endpoint
+      BathysphereLiveWeb.Endpoint,
       # Start a worker by calling: BathysphereLive.Worker.start_link(arg)
       # {BathysphereLive.Worker, arg}
+      { BathysphereLive.Backend.Game, {} }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

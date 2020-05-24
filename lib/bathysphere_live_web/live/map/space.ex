@@ -28,7 +28,7 @@ defmodule BathysphereLiveWeb.Map.Space do
     </div>
     """
   end
-  def render(%{actions: actions} = assigns) do
+  def render(assigns) do
     ~L"""
     <div class="box <%= current_format(@current?) %>">
       <%= for { action, idx } <- Enum.with_index(@actions) do %>
