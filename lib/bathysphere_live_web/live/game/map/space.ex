@@ -12,17 +12,20 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
       has-tooltip-multiline
       data-tooltip="Marked space"
     >
+      <span class="<%= if @current?, do: "has-text-info", else: "has-text-grey" %>">
+        <i class="fas fa-cloud"></i>
+      </span>
     </div>
     """
   end
   def render(%{actions: []} = assigns) do
     ~L"""
     <div
-      class="box <%= current_format(@current?) %>"
+      class="box <%= current_background(@current?) %>"
       has-tooltip-multiline
       data-tooltip="Empty space"
     >
-      <span class="has-text-grey-lighter">
+      <span class="<%= current_text(@current?) %>">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
@@ -30,7 +33,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
   end
   def render(assigns) do
     ~L"""
-    <div class="box <%= current_format(@current?) %>">
+    <div class="box <%= current_background(@current?) %>">
       <%= for { action, idx } <- Enum.with_index(@actions) do %>
         <%= if idx > 0 do %>
           <span class="has-text-weight-bold"> / </span>
@@ -56,7 +59,10 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
     """
   end
 
-  defp current_format(true), do: "has-background-info"
-  defp current_format(false), do: "has-background-grey-lighter"
+  defp current_background(true), do: "has-background-info"
+  defp current_background(false), do: "has-background-grey-lighter"
+
+  defp current_text(true), do: "has-text-info"
+  defp current_text(false), do: "has-text-grey-lighter"
 
 end

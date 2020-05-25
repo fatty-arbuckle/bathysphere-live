@@ -83,6 +83,18 @@ defmodule BathysphereLiveWeb.PageLive do
       )
     }
   end
+  def handle_event("dice-pool-selection", %{ "number" => value, "index" => index }, socket) do
+    {die, _} = Integer.parse(value)
+    BathysphereLive.Backend.Game.down(die)
+    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    {
+      :noreply,
+      assign(
+        socket,
+        game_state: game_state
+      )
+    }
+  end
 
 
 end

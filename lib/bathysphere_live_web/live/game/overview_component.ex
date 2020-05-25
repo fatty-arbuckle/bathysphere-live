@@ -4,8 +4,8 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
   def render(assigns) do
     ~L"""
       <div class="box has-background-grey-lighter">
-        <%= for value <- @dice_pool do %>
-          <span class="is-size-1 has-text-success">
+        <%= for {value,idx} <- Enum.with_index(@dice_pool) do %>
+          <span class="is-size-1 has-text-success" phx-click="dice-pool-selection" phx-value-number="<%= value %>" phx-value-index="<%= idx %>">
             <i class="fas <%= die(value) %>"></i>
           </span>
         <% end %>
