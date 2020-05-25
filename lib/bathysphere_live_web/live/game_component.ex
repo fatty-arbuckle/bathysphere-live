@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.PlayLive do
+defmodule BathysphereLiveWeb.GameComponent do
   use Phoenix.LiveComponent
 
   def render(assigns) do
@@ -11,7 +11,7 @@ defmodule BathysphereLiveWeb.PlayLive do
           <%=
             live_component(
               @socket,
-              BathysphereLiveWeb.OverviewComponent,
+              BathysphereLiveWeb.Game.OverviewComponent,
               state: @game_state.state,
               dice_pool_size: @game_state.dice_pool_size,
               dice_pool: @game_state.dice_pool,
@@ -30,7 +30,7 @@ defmodule BathysphereLiveWeb.PlayLive do
         <!-- Game Map -->
         <div class="column" style="height:90vh; overflow-y: auto;">
           <%=
-            live_component(@socket, BathysphereLiveWeb.MapComponent, map: @game_state.map, position: @game_state.position)
+            live_component(@socket, BathysphereLiveWeb.Game.MapComponent, map: @game_state.map, position: @game_state.position)
           %>
         </div>
 

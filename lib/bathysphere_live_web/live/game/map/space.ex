@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.Space do
+defmodule BathysphereLiveWeb.Game.Map.Space do
   use Phoenix.LiveComponent
 
   def update(%{space: {:space, %{ actions: actions, marked?: marked?} }, current?: current? } = _assigns, socket) do
@@ -38,17 +38,17 @@ defmodule BathysphereLiveWeb.Map.Space do
         <%=
           case action do
             {:discovery, :fish, _} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.Fish)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Fish)
             {:discovery, :octopus, _} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.Octopus)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Octopus)
             {:stress, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.Stress, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Stress, value: value, used?: used?)
             {:oxygen, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.Oxygen, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Oxygen, value: value, used?: used?)
             {:damage, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.Damage, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Damage, value: value, used?: used?)
             {:ocean_floor, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Map.Space.OceanFloor, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.OceanFloor, value: value, used?: used?)
           end
         %>
       <% end %>

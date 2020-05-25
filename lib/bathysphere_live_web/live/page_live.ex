@@ -43,7 +43,7 @@ defmodule BathysphereLiveWeb.PageLive do
         <div>
           <%= live_component(
             @socket,
-            BathysphereLiveWeb.PlayLive,
+            BathysphereLiveWeb.GameComponent,
             game_state: @game_state)
           %>
         </div>

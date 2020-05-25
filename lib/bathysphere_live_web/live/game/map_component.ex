@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.MapComponent do
+defmodule BathysphereLiveWeb.Game.MapComponent do
   use Phoenix.LiveComponent
 
   def update(%{map: map, position: position} = _assigns, socket) do
@@ -16,11 +16,11 @@ defmodule BathysphereLiveWeb.MapComponent do
             <div class="column is-10 has-text-centered">
               <%= case type do
                 :start ->
-                  live_component(@socket, BathysphereLiveWeb.Map.Start, current?: idx == @position)
+                  live_component(@socket, BathysphereLiveWeb.Game.Map.Start, current?: idx == @position)
                 :space ->
-                  live_component(@socket, BathysphereLiveWeb.Map.Space, space: space, current?: idx == @position)
+                  live_component(@socket, BathysphereLiveWeb.Game.Map.Space, space: space, current?: idx == @position)
                 :depth_zone ->
-                  live_component(@socket, BathysphereLiveWeb.Map.DepthZone)
+                  live_component(@socket, BathysphereLiveWeb.Game.Map.DepthZone)
               end %>
             </div>
 

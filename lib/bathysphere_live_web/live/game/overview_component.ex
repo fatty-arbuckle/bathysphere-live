@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.OverviewComponent do
+defmodule BathysphereLiveWeb.Game.OverviewComponent do
   use Phoenix.LiveComponent
 
   def render(assigns) do
@@ -48,9 +48,9 @@ defmodule BathysphereLiveWeb.OverviewComponent do
         <% end %>
       </div>
 
-      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @oxygen, label: "Oxygen", icon: "fa-soap") %>
-      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @stress, label: "Stress", icon: "fa-exclamation-circle") %>
-      <%= live_component(@socket, BathysphereLiveWeb.Map.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-ambulance") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @oxygen, label: "Oxygen", icon: "fa-soap") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @stress, label: "Stress", icon: "fa-exclamation-circle") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-ambulance") %>
 
     """
   end

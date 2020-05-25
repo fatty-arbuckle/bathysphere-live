@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.Space.Fish do
+defmodule BathysphereLiveWeb.Game.Map.Space.Fish do
   use Phoenix.LiveComponent
 
   def render(assigns) do

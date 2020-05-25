@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.DepthZone do
+defmodule BathysphereLiveWeb.Game.Map.DepthZone do
   use Phoenix.LiveComponent
 
   def render(assigns) do

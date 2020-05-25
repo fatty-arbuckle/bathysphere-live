@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.Space.Stress do
+defmodule BathysphereLiveWeb.Game.Map.Space.Stress do
   use Phoenix.LiveComponent
 
   def render(%{used?: true} = assigns) do

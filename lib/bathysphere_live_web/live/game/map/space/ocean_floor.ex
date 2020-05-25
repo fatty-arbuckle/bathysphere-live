@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.Space.OceanFloor do
+defmodule BathysphereLiveWeb.Game.Map.Space.OceanFloor do
   use Phoenix.LiveComponent
 
   def render(assigns) do

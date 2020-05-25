@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Map.Start do
+defmodule BathysphereLiveWeb.Game.Map.Start do
   use Phoenix.LiveComponent
 
   def render(assigns) do
