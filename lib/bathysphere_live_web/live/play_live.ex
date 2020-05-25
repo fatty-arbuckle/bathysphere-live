@@ -1,6 +1,9 @@
-<section class="hero">
-  <div class="hero-body">
-    <div class="container has-text-centered">
+defmodule BathysphereLiveWeb.PlayLive do
+  use Phoenix.LiveComponent
+
+  def render(assigns) do
+    ~L"""
+    <div class="has-text-centered">
       <div class="columns">
 
         <!-- Game Overview -->
@@ -33,5 +36,6 @@
 
       </div>
     </div>
-  </div>
-</section>
+    """
+  end
+end

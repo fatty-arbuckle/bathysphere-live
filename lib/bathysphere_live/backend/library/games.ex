@@ -91,6 +91,11 @@ defmodule BathysphereLive.Backend.Library.Games do
     }
   }
 
+  def list() do
+    Map.keys(@games)
+  end
+
+
   def load(name) do
     @games[name]
   end
