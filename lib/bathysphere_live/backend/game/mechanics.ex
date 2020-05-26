@@ -33,29 +33,43 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     {updated_game_state.state, updated_game_state}
   end
 
-  def up(%{state: :ok, dice_pool: dice_pool} = game_state, n) do
-    if Enum.member?(dice_pool, n) do
-      updated = move(%{ game_state | remaining: n, direction: -1 })
-      {updated.state, %{ updated | dice_pool: List.delete(dice_pool, n)}}
-    else
-      {:invalid_move, game_state}
+  def up(%{state: :ok, dice_pool: dice_pool} = game_state, n, index) do
+    {die, _idx, used?} = Enum.at(dice_pool, index)
+    cond do
+      die != n ->
+        {:invalid_move, game_state}
+      used? ->
+        {:invalid_move, game_state}
+      !used? ->
+        updated = move(%{ game_state | remaining: n, direction: -1 })
+        {updated.state, %{ updated |
+          dice_pool: List.replace_at(dice_pool, index, {die, index, true})}
+        }
     end
   end
-  def up(%{state: state} = game_state, _n), do: {state, game_state}
+  def up(%{state: state} = game_state, _n, _index), do: {state, game_state}
 
-  def down(%{state: :ok, dice_pool: dice_pool} = game_state, n) do
-    if Enum.member?(dice_pool, n) do
-      updated = move(%{ game_state | remaining: n, direction: +1 })
-      {updated.state, %{ updated | dice_pool: List.delete(dice_pool, n)}}
-    else
-      {:invalid_move, game_state}
+  def down(%{state: :ok, dice_pool: dice_pool} = game_state, n, index) do
+    {die, _idx, used?} = Enum.at(dice_pool, index)
+    cond do
+      die != n ->
+        {:invalid_move, game_state}
+      used? ->
+        {:invalid_move, game_state}
+      !used? ->
+        updated = move(%{ game_state | remaining: n, direction: +1 })
+        {updated.state, %{ updated |
+          dice_pool: List.replace_at(dice_pool, index, {die, index, true})}
+        }
     end
   end
-  def down(%{state: state} = game_state, _n), do: {state, game_state}
+  def down(%{state: state} = game_state, _n, _index), do: {state, game_state}
 
 
   defp roll_dice(n) do
-    Enum.map(0..(n-1), fn _ -> :rand.uniform(6) end)
+    Enum.map(0..(n-1), fn idx ->
+      { :rand.uniform(6), idx, false }
+    end)
   end
 
   defp move(%{ remaining: 0 } = game_state) do

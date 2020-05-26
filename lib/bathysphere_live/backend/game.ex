@@ -14,12 +14,12 @@ defmodule BathysphereLive.Backend.Game do
     GenServer.call(__MODULE__, :state)
   end
 
-  def up(n) do
-    GenServer.call(__MODULE__, {:up, n})
+  def up(n, index) do
+    GenServer.call(__MODULE__, {:up, n, index})
   end
 
-  def down(n) do
-    GenServer.call(__MODULE__, {:down, n})
+  def down(n, index) do
+    GenServer.call(__MODULE__, {:down, n, index})
   end
 
   def select_action(action) do
@@ -50,13 +50,13 @@ defmodule BathysphereLive.Backend.Game do
     {:reply, state, state}
   end
 
-  def handle_call({:up, n}, _from, {_state, game_state}) do
-    {reply, new_state} = BathysphereLive.Backend.Game.Mechanics.up(game_state, n)
+  def handle_call({:up, n, index}, _from, {_state, game_state}) do
+    {reply, new_state} = BathysphereLive.Backend.Game.Mechanics.up(game_state, n, index)
     {:reply, reply, {reply, new_state}}
   end
 
-  def handle_call({:down, n}, _from, {_state, game_state}) do
-    {reply, new_state} = BathysphereLive.Backend.Game.Mechanics.down(game_state, n)
+  def handle_call({:down, n, index}, _from, {_state, game_state}) do
+    {reply, new_state} = BathysphereLive.Backend.Game.Mechanics.down(game_state, n, index)
     {:reply, reply, {reply, new_state}}
   end
 

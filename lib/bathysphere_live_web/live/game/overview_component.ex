@@ -4,17 +4,45 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
   def render(assigns) do
     ~L"""
       <div class="box has-background-grey-lighter">
-        <%= for {value,idx} <- Enum.with_index(@dice_pool) do %>
-          <span class="is-size-1 has-text-success" phx-click="dice-pool-selection" phx-value-number="<%= value %>" phx-value-index="<%= idx %>">
-            <i class="fas <%= die(value) %>"></i>
-          </span>
+        <div class="columns">
+        <%= for {value, index, used?} <- @dice_pool do %>
+          <div class="column">
+            <ul>
+              <li
+                <%= if !used? do %>
+                  phx-click="dice-pool-selection"
+                  phx-value-number="<%= value %>"
+                  phx-value-index="<%= index %>"
+                  phx-value-direction="up"
+                  class="has-text-success"
+                <% else %>
+                  class="has-text-gray"
+                <% end %>
+              >
+                UP
+              </li>
+              <li>
+                <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
+                  <i class="fas <%= die(value) %>"></i>
+                </span>
+              </li>
+              <li
+                <%= if !used? do %>
+                  phx-click="dice-pool-selection"
+                  phx-value-number="<%= value %>"
+                  phx-value-index="<%= index %>"
+                  phx-value-direction="down"
+                  class="has-text-success"
+                <% else %>
+                  class="has-text-gray"
+                <% end %>
+              >
+                DOWN
+              </li>
+            </ul>
+          </div>
         <% end %>
-
-        <%= for _value <- 0..(@dice_pool_size - Enum.count(@dice_pool) - 1) do %>
-          <span class="is-size-1 ">
-            <i class="fas fa-square"></i>
-          </span>
-        <% end %>
+        </div>
       </div>
 
       <div class="box has-background-grey-lighter has-text-left">
