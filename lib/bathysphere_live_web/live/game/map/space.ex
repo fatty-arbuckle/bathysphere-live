@@ -34,6 +34,13 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
   def render(assigns) do
     ~L"""
     <div class="box <%= current_background(@current?) %>">
+
+      <%= if Enum.all?(@actions, fn {_, _, used?} -> used? end) do %>
+        <span class="has-text-grey-lighter">
+          <i class="fas fa-cloud"></i>
+        </span>
+      <% end %>
+
       <%= for { action, idx } <- Enum.with_index(@actions) do %>
         <%= if idx > 0 do %>
           <span class="has-text-weight-bold"> / </span>

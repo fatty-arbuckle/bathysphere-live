@@ -83,25 +83,10 @@ defmodule BathysphereLiveWeb.PageLive do
       )
     }
   end
-  def handle_event("dice-pool-selection", %{ "number" => value, "index" => index, "direction" => "down" }, socket) do
-    IO.inspect("#{index}, #{value}, down", label: "dice-pool-selection")
+  def handle_event("dice-pool-selection", %{ "number" => value, "index" => index, "direction" => direction }, socket) do
     {die, _} = Integer.parse(value)
     {idx, _} = Integer.parse(index)
-    BathysphereLive.Backend.Game.down(die, idx)
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
-    {
-      :noreply,
-      assign(
-        socket,
-        game_state: game_state
-      )
-    }
-  end
-  def handle_event("dice-pool-selection", %{ "number" => value, "index" => index, "direction" => "up" }, socket) do
-    IO.inspect("#{index}, #{value}, up", label: "dice-pool-selection")
-    {die, _} = Integer.parse(value)
-    {idx, _} = Integer.parse(index)
-    BathysphereLive.Backend.Game.up(die, idx)
+    move(die, idx, direction)
     {_state, game_state} = BathysphereLive.Backend.Game.state()
     {
       :noreply,
@@ -112,5 +97,7 @@ defmodule BathysphereLiveWeb.PageLive do
     }
   end
 
+  defp move(die, idx, "up"), do: BathysphereLive.Backend.Game.up(die, idx)
+  defp move(die, idx, "down"), do: BathysphereLive.Backend.Game.down(die, idx)
 
 end
