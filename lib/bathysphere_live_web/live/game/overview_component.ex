@@ -4,44 +4,56 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
   def render(assigns) do
     ~L"""
       <div class="box has-background-grey-lighter">
-        <div class="columns">
-        <%= for {value, index, used?} <- @dice_pool do %>
+        <div class="columns is-vcentered">
           <div class="column">
-            <ul>
-              <li
-                <%= if !used? do %>
-                  phx-click="dice-pool-selection"
-                  phx-value-number="<%= value %>"
-                  phx-value-index="<%= index %>"
-                  phx-value-direction="up"
-                  class="has-text-success"
-                <% else %>
-                  class="has-text-gray"
-                <% end %>
-              >
-                UP
-              </li>
-              <li>
-                <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
-                  <i class="fas <%= die(value) %>"></i>
-                </span>
-              </li>
-              <li
-                <%= if !used? do %>
-                  phx-click="dice-pool-selection"
-                  phx-value-number="<%= value %>"
-                  phx-value-index="<%= index %>"
-                  phx-value-direction="down"
-                  class="has-text-success"
-                <% else %>
-                  class="has-text-gray"
-                <% end %>
-              >
-                DOWN
-              </li>
-            </ul>
+            <div
+              class="button is-grey-lighter has-background-grey-lighter"
+              has-tooltip-multiline
+              data-tooltip="Reroll your dice"
+              phx-click="dice-pool-reroll"
+            >
+              <span class="is-size-1 has-text-info">
+                <i class="fas fa-dice"></i>
+              </span>
+            </div>
           </div>
-        <% end %>
+          <%= for {value, index, used?} <- @dice_pool do %>
+            <div class="column">
+              <ul>
+                <li
+                  <%= if !used? do %>
+                    phx-click="dice-pool-selection"
+                    phx-value-number="<%= value %>"
+                    phx-value-index="<%= index %>"
+                    phx-value-direction="up"
+                    class="has-text-success"
+                  <% else %>
+                    class="has-text-gray"
+                  <% end %>
+                >
+                  UP
+                </li>
+                <li>
+                  <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
+                    <i class="fas <%= die(value) %>"></i>
+                  </span>
+                </li>
+                <li
+                  <%= if !used? do %>
+                    phx-click="dice-pool-selection"
+                    phx-value-number="<%= value %>"
+                    phx-value-index="<%= index %>"
+                    phx-value-direction="down"
+                    class="has-text-success"
+                  <% else %>
+                    class="has-text-gray"
+                  <% end %>
+                >
+                  DOWN
+                </li>
+              </ul>
+            </div>
+          <% end %>
         </div>
       </div>
 

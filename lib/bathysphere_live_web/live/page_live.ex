@@ -51,7 +51,6 @@ defmodule BathysphereLiveWeb.PageLive do
     </section>
     """
   end
-  # {{:stress, -1, false}, 0}, {{:oxygen, -1, false}, 1}
   def render(%{game_state: %{state: {:select_action, choices}}} = assigns) do
     ~L"""
     <section class="hero">
@@ -142,7 +141,17 @@ defmodule BathysphereLiveWeb.PageLive do
       )
     }
   end
-
+  def handle_event("dice-pool-reroll", _data, socket) do
+    BathysphereLive.Backend.Game.reroll()
+    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    {
+      :noreply,
+      assign(
+        socket,
+        game_state: game_state
+      )
+    }
+  end
   def handle_event("select-option", %{ "resource" => resource, "cost" => cost, "used" => _used?, "index" => index }, socket) do
     {value, _} = Integer.parse(cost)
     BathysphereLive.Backend.Game.select_action({{String.to_atom(resource), value, false}, index})
