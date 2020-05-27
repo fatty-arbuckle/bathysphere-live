@@ -86,6 +86,28 @@ defmodule BathysphereLiveWeb.PageLive do
     </section>
     """
   end
+  def render(%{game_state: %{state: :dead}} = assigns) do
+    ~L"""
+    <section class="hero">
+      <div class="hero-body">
+        <div class="modal is-active">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+            <h1>You have died!</h1>
+            <button class="button" phx-click="reset-game">RESET</button>
+          </div>
+        </div>
+        <div>
+          <%= live_component(
+            @socket,
+            BathysphereLiveWeb.GameComponent,
+            game_state: @game_state)
+          %>
+        </div>
+      </div>
+    </section>
+    """
+  end
   def render(%{game_state: whatever} = assigns) do
     IO.inspect(whatever, label: "WHAT?!")
     ~L"""
