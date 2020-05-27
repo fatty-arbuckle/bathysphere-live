@@ -26,9 +26,9 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
                     phx-value-number="<%= value %>"
                     phx-value-index="<%= index %>"
                     phx-value-direction="up"
-                    class="has-text-success"
+                    class="button is-small is-primary is-light is-fullwidth has-text-success"
                   <% else %>
-                    class="has-text-gray"
+                    class="button is-small is-primary is-light is-fullwidth has-text-gray"
                   <% end %>
                 >
                   UP
@@ -44,9 +44,9 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
                     phx-value-number="<%= value %>"
                     phx-value-index="<%= index %>"
                     phx-value-direction="down"
-                    class="has-text-success"
+                    class="button is-small is-primary is-light is-fullwidth has-text-success"
                   <% else %>
-                    class="has-text-gray"
+                    class="button is-small is-primary is-light is-fullwidth has-text-gray"
                   <% end %>
                 >
                   DOWN
