@@ -4,6 +4,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Fish do
   def render(assigns) do
     ~L"""
       <span
+        class="has-text-success"
         has-tooltip-multiline
         data-tooltip="Fish Discovery"
       >

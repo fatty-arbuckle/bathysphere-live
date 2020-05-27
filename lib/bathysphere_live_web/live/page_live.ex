@@ -143,7 +143,7 @@ defmodule BathysphereLiveWeb.PageLive do
     }
   end
 
-  def handle_event("select-option", %{ "resource" => resource, "cost" => cost, "used" => used?, "index" => index }, socket) do
+  def handle_event("select-option", %{ "resource" => resource, "cost" => cost, "used" => _used?, "index" => index }, socket) do
     {value, _} = Integer.parse(cost)
     BathysphereLive.Backend.Game.select_action({{String.to_atom(resource), value, false}, index})
     {_state, game_state} = BathysphereLive.Backend.Game.state()
