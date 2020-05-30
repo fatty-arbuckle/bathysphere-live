@@ -90,7 +90,7 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
 
       <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @oxygen, label: "Oxygen", icon: "fa-soap") %>
       <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @stress, label: "Stress", icon: "fa-exclamation-circle") %>
-      <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-ambulance") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-skull") %>
 
     """
   end

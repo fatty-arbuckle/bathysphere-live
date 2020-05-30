@@ -8,7 +8,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Damage do
       has-tooltip-multiline
       data-tooltip="Damage: <%= @value %>"
     >
-      <i class="fas fa-ambulance"></i>
+      <i class="fas fa-skull"></i>
       <%= @value %>
     </span>
     """
