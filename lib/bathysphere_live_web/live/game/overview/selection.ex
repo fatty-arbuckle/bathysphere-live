@@ -5,16 +5,19 @@ defmodule BathysphereLiveWeb.Game.Overview.Selection do
     ~L"""
       <article class="message is-primary">
         <div class="message-header">
-          Make a Selection
+          <span class="has-text-left">
+            Make a Selection
+          </span>
+          <span class="has-text-right">
+            <%= @remaining %> spaces to go
+          </span>
         </div>
         <div class="message-body has-text-centered">
           <div class="columns">
             <%= for {{resource, cost, used?}, index} <- @choices do %>
               <div class="column">
                 <ul>
-                  <li class="button is-small is-primary is-light is-fullwidth has-text-gray">
-                    UP
-                  </li>
+                  <li class="button is-small is-text is-fullwidth"></li>
                   <li>
                     <div
                       phx-click="select-option"
@@ -23,7 +26,6 @@ defmodule BathysphereLiveWeb.Game.Overview.Selection do
                       phx-value-used="<%= used? %>"
                       phx-value-index="<%= index %>"
                     >
-
                       <%=
                         case resource do
                           :stress ->
@@ -36,9 +38,7 @@ defmodule BathysphereLiveWeb.Game.Overview.Selection do
                       %>
                     </button>
                   </li>
-                  <li class="button is-small is-primary is-light is-fullwidth has-text-gray">
-                    DOWN
-                  </li>
+                  <li class="button is-small is-text is-fullwidth"></li>
                 </ul>
               </div>
             <% end %>

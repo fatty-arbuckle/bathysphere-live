@@ -10,7 +10,7 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
         :dead ->
           live_component(@socket, BathysphereLiveWeb.Game.Overview.Dead)
         {:select_action, choices} ->
-          live_component(@socket, BathysphereLiveWeb.Game.Overview.Selection, choices: choices)
+          live_component(@socket, BathysphereLiveWeb.Game.Overview.Selection, choices: choices, remaining: @remaining)
       end %>
 
       <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Score,

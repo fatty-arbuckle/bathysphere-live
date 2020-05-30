@@ -12,7 +12,7 @@ defmodule BathysphereLiveWeb.Game.Overview.Dice do
             <div class="columns is-vcentered">
               <div class="column">
                 <div
-                  class="button"
+                  class="button is-text"
                   has-tooltip-multiline
                   data-tooltip="Reroll your dice"
                   phx-click="dice-pool-reroll"
@@ -34,9 +34,12 @@ defmodule BathysphereLiveWeb.Game.Overview.Dice do
                         class="button is-small is-primary is-light is-fullwidth has-text-success"
                       <% else %>
                         class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                        disabled
                       <% end %>
                     >
-                      UP
+                      <span class="is-size-3">
+                        <i class="fas fa-chevron-up"></i>
+                      </span>
                     </li>
                     <li>
                       <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
@@ -52,9 +55,12 @@ defmodule BathysphereLiveWeb.Game.Overview.Dice do
                         class="button is-small is-primary is-light is-fullwidth has-text-success"
                       <% else %>
                         class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                        disabled
                       <% end %>
                     >
-                      DOWN
+                      <span class="is-size-3">
+                        <i class="fas fa-chevron-down"></i>
+                      </span>
                     </li>
                   </ul>
                 </div>
