@@ -3,7 +3,7 @@ defmodule BathysphereLiveWeb.Game.Map.Start do
 
   def render(assigns) do
     ~L"""
-      <div class="box <%= if @current?, do: "has-background-info", else: "has-background-grey-lighter" %>">
+      <div class="box">
         <span class="is-size-3">
           <i class="fas fa-swimming-pool"></i>
         </span>

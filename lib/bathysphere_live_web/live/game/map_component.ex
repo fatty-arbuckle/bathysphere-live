@@ -13,16 +13,27 @@ defmodule BathysphereLiveWeb.Game.MapComponent do
           <div class="columns">
             <div class="column is-1 has-text-centered"></div>
 
+
             <div class="column is-10 has-text-centered">
+              <%= if idx == @position do %>
+                <div class="box has-background-info">
+              <% end %>
+
               <%= case type do
                 :start ->
-                  live_component(@socket, BathysphereLiveWeb.Game.Map.Start, current?: idx == @position)
+                  live_component(@socket, BathysphereLiveWeb.Game.Map.Start)
                 :space ->
                   live_component(@socket, BathysphereLiveWeb.Game.Map.Space, space: space, current?: idx == @position)
                 :depth_zone ->
                   live_component(@socket, BathysphereLiveWeb.Game.Map.DepthZone)
               end %>
+
+              <%= if idx == @position do %>
+                </div>
+              <% end %>
+
             </div>
+
 
             <div class="column is-1 has-text-centered"></div>
           </div>
