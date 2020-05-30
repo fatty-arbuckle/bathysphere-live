@@ -16,9 +16,12 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
         octopus_count: @octopus_count
       ) %>
 
-      <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Resource, resource: @oxygen, label: "Oxygen", icon: "fa-soap") %>
-      <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Resource, resource: @stress, label: "Stress", icon: "fa-exclamation-circle") %>
-      <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Resource, resource: @damage, label: "Damage", icon: "fa-skull") %>
+      <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Resources,
+        oxygen: @oxygen,
+        stress: @stress,
+        damage: @damage
+      ) %>
+
 
     """
   end

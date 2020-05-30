@@ -3,36 +3,47 @@ defmodule BathysphereLiveWeb.Game.Overview.Score do
 
   def render(assigns) do
     ~L"""
-      <div class="box has-background-grey-lighter has-text-left">
-        <span class="has-text-info">
-          Score:
-        </span>
-        <span class="">
-         <%= @score %>
-        </span>
-      </div>
-
-      <div class="box has-text-left has-background-grey-lighter">
-        <span class="has-text-info">
-          <i class="fas fa-fish"></i>
-        </span>
-        <%= for {value, idx} <- Enum.with_index(@fish_points) do %>
-          <span class="<%= if idx < @fish_count, do: "has-text-success", else: "" %>">
-            <%= pretty_value(value) %>
+      <article class="message is-primary">
+        <div class="message-header">
+          <span class="is-size-3">
+           <%= @score %>
           </span>
-        <% end %>
-      </div>
-
-      <div class="box has-text-left has-background-grey-lighter">
-        <span class="has-text-info">
-          <i class="fas fa-wind"></i>
-        </span>
-        <%= for {value, idx} <- Enum.with_index(@octopus_points) do %>
-        <span class="<%= if idx < @octopus_count, do: "has-text-success", else: "" %>">
-            <%= pretty_value(value) %>
-          </span>
-        <% end %>
-      </div>
+        </div>
+        <div class="message-body has-text-left">
+          <div class="row">
+            <div class="columns">
+              <div class="column is-one-fifth">
+                <span class="is-size-3">
+                  <i class="fas fa-fish"></i>
+                </span>
+              </div>
+              <div class="column">
+                <%= for {value, idx} <- Enum.with_index(@fish_points) do %>
+                  <span class="is-size-3 <%= if idx < @fish_count, do: "has-text-success", else: "" %>">
+                    <%= pretty_value(value) %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="columns">
+              <div class="column is-one-fifth">
+                <span class="is-size-3">
+                  <i class="fas fa-wind"></i>
+                </span>
+              </div>
+              <div class="column">
+                <%= for {value, idx} <- Enum.with_index(@octopus_points) do %>
+                  <span class="is-size-3 <%= if idx < @octopus_count, do: "has-text-success", else: "" %>">
+                    <%= pretty_value(value) %>
+                  </span>
+                <% end %>
+              </div>
+            </div>s
+          </div>
+        </div>
+      </article>
     """
   end
 

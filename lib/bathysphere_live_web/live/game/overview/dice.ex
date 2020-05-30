@@ -3,59 +3,66 @@ defmodule BathysphereLiveWeb.Game.Overview.Dice do
 
   def render(assigns) do
     ~L"""
-      <div class="box has-background-grey-lighter">
-        <div class="columns is-vcentered">
-          <div class="column">
-            <div
-              class="button is-grey-lighter has-background-grey-lighter"
-              has-tooltip-multiline
-              data-tooltip="Reroll your dice"
-              phx-click="dice-pool-reroll"
-            >
-              <span class="is-size-1 has-text-info">
-                <i class="fas fa-dice"></i>
-              </span>
+      <article class="message is-primary">
+        <div class="message-header">
+          Dice Pool
+        </div>
+        <div class="message-body has-text-centered">
+          <div>
+            <div class="columns is-vcentered">
+              <div class="column">
+                <div
+                  class="button"
+                  has-tooltip-multiline
+                  data-tooltip="Reroll your dice"
+                  phx-click="dice-pool-reroll"
+                >
+                  <span class="is-size-1 has-text-info">
+                    <i class="fas fa-dice"></i>
+                  </span>
+                </div>
+              </div>
+              <%= for {value, index, used?} <- @dice_pool do %>
+                <div class="column">
+                  <ul>
+                    <li
+                      <%= if !used? do %>
+                        phx-click="dice-pool-selection"
+                        phx-value-number="<%= value %>"
+                        phx-value-index="<%= index %>"
+                        phx-value-direction="up"
+                        class="button is-small is-primary is-light is-fullwidth has-text-success"
+                      <% else %>
+                        class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                      <% end %>
+                    >
+                      UP
+                    </li>
+                    <li>
+                      <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
+                        <i class="fas <%= die(value) %>"></i>
+                      </span>
+                    </li>
+                    <li
+                      <%= if !used? do %>
+                        phx-click="dice-pool-selection"
+                        phx-value-number="<%= value %>"
+                        phx-value-index="<%= index %>"
+                        phx-value-direction="down"
+                        class="button is-small is-primary is-light is-fullwidth has-text-success"
+                      <% else %>
+                        class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                      <% end %>
+                    >
+                      DOWN
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
             </div>
           </div>
-          <%= for {value, index, used?} <- @dice_pool do %>
-            <div class="column">
-              <ul>
-                <li
-                  <%= if !used? do %>
-                    phx-click="dice-pool-selection"
-                    phx-value-number="<%= value %>"
-                    phx-value-index="<%= index %>"
-                    phx-value-direction="up"
-                    class="button is-small is-primary is-light is-fullwidth has-text-success"
-                  <% else %>
-                    class="button is-small is-primary is-light is-fullwidth has-text-gray"
-                  <% end %>
-                >
-                  UP
-                </li>
-                <li>
-                  <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
-                    <i class="fas <%= die(value) %>"></i>
-                  </span>
-                </li>
-                <li
-                  <%= if !used? do %>
-                    phx-click="dice-pool-selection"
-                    phx-value-number="<%= value %>"
-                    phx-value-index="<%= index %>"
-                    phx-value-direction="down"
-                    class="button is-small is-primary is-light is-fullwidth has-text-success"
-                  <% else %>
-                    class="button is-small is-primary is-light is-fullwidth has-text-gray"
-                  <% end %>
-                >
-                  DOWN
-                </li>
-              </ul>
-            </div>
-          <% end %>
         </div>
-      </div>
+      </article>
     """
   end
 

@@ -4,7 +4,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Oxygen do
   def render(assigns) do
     ~L"""
     <span
-      class="<%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
+      class="is-size-3 <%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
       has-tooltip-multiline
       data-tooltip="Oxygen: <%= @value %>"
     >

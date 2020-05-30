@@ -12,7 +12,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
       has-tooltip-multiline
       data-tooltip="Marked space"
     >
-      <span class="<%= if @current?, do: "has-text-info", else: "has-text-grey" %>">
+      <span class="is-size-3 <%= if @current?, do: "has-text-info", else: "has-text-grey" %>">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
@@ -25,7 +25,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
       has-tooltip-multiline
       data-tooltip="Empty space"
     >
-      <span class="<%= current_text(@current?) %>">
+      <span class="is-size-3 <%= current_text(@current?) %>">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
@@ -43,7 +43,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
 
       <%= for { action, idx } <- Enum.with_index(@actions) do %>
         <%= if idx > 0 do %>
-          <span class="has-text-weight-bold"> / </span>
+          <span class="is-size-3 has-text-weight-bold"> / </span>
         <% end %>
         <%=
           case action do

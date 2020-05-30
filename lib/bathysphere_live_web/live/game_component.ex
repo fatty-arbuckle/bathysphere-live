@@ -7,7 +7,7 @@ defmodule BathysphereLiveWeb.GameComponent do
       <div class="columns">
 
         <!-- Game Overview -->
-        <div class="column" style="height:90vh;">
+        <div class="column">
           <%=
             live_component(
               @socket,
@@ -28,7 +28,7 @@ defmodule BathysphereLiveWeb.GameComponent do
         </div>
 
         <!-- Game Map -->
-        <div class="column" style="height:90vh; overflow-y: auto;">
+        <div class="column" style="height:99vh; overflow-y: auto;">
           <%=
             live_component(@socket, BathysphereLiveWeb.Game.MapComponent, map: @game_state.map, position: @game_state.position)
           %>
