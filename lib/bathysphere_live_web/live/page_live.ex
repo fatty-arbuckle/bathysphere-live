@@ -35,7 +35,7 @@ defmodule BathysphereLiveWeb.PageLive do
     </section>
     """
   end
-  def render(%{game_state: %{state: :ok}} = assigns) do
+  def render(assigns) do
     ~L"""
     <section class="hero">
       <div class="hero-body">
@@ -47,73 +47,6 @@ defmodule BathysphereLiveWeb.PageLive do
             game_state: @game_state)
           %>
         </div>
-      </div>
-    </section>
-    """
-  end
-  def render(%{game_state: %{state: {:select_action, choices}}} = assigns) do
-    ~L"""
-    <section class="hero">
-      <div class="hero-body">
-        <div class="modal is-active">
-          <div class="modal-background"></div>
-          <div class="modal-content">
-            <h1>You have a choice to make!</h1>
-            <%= for {{resource, cost, used?}, index} <- choices do %>
-              <button
-                class="button"
-                phx-click="select-option"
-                phx-value-resource="<%= resource %>"
-                phx-value-cost="<%= cost %>"
-                phx-value-used="<%= used? %>"
-                phx-value-index="<%= index %>"
-              >
-                <%= resource %> <%= cost %>
-              </button>
-            <% end %>
-          </div>
-        </div>
-
-        <button class="button" phx-click="reset-game">RESET</button>
-        <div>
-          <%= live_component(
-            @socket,
-            BathysphereLiveWeb.GameComponent,
-            game_state: @game_state)
-          %>
-        </div>
-      </div>
-    </section>
-    """
-  end
-  def render(%{game_state: %{state: :dead}} = assigns) do
-    ~L"""
-    <section class="hero">
-      <div class="hero-body">
-        <div class="modal is-active">
-          <div class="modal-background"></div>
-          <div class="modal-content">
-            <h1>You have died!</h1>
-            <button class="button" phx-click="reset-game">RESET</button>
-          </div>
-        </div>
-        <div>
-          <%= live_component(
-            @socket,
-            BathysphereLiveWeb.GameComponent,
-            game_state: @game_state)
-          %>
-        </div>
-      </div>
-    </section>
-    """
-  end
-  def render(%{game_state: whatever} = assigns) do
-    IO.inspect(whatever, label: "WHAT?!")
-    ~L"""
-    <section class="hero">
-      <div class="hero-body">
-        <h1>Whatever!</h1>
       </div>
     </section>
     """

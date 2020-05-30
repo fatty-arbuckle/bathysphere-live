@@ -4,7 +4,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Stress do
   def render(assigns) do
     ~L"""
       <span
-        class="is-size-3 <%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
+        class="<%= @size %> <%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
         has-tooltip-multiline
         data-tooltip="Stress: <%= @value %>"
       >

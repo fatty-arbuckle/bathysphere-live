@@ -4,7 +4,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.OceanFloor do
   def render(assigns) do
     ~L"""
     <span
-      class="is-size-3 has-text-success"
+      class="<%= @size %> has-text-success"
       has-tooltip-multiline
       data-tooltip="Ocean Floor: <%= pretty_value(@value) %>"
     >

@@ -4,9 +4,14 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
   def render(assigns) do
     ~L"""
 
-      <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Dice,
-        dice_pool: @dice_pool
-      ) %>
+      <%= case @state do
+        :ok ->
+          live_component(@socket, BathysphereLiveWeb.Game.Overview.Dice, dice_pool: @dice_pool)
+        :dead ->
+          live_component(@socket, BathysphereLiveWeb.Game.Overview.Dead)
+        {:select_action, choices} ->
+          live_component(@socket, BathysphereLiveWeb.Game.Overview.Selection, choices: choices)
+      end %>
 
       <%= live_component(@socket, BathysphereLiveWeb.Game.Overview.Score,
         score: @score,
@@ -21,8 +26,6 @@ defmodule BathysphereLiveWeb.Game.OverviewComponent do
         stress: @stress,
         damage: @damage
       ) %>
-
-
     """
   end
 

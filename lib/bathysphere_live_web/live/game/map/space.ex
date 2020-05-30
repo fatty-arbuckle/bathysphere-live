@@ -48,17 +48,17 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
         <%=
           case action do
             {:discovery, :fish, _} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Fish)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Fish, size: "is-size-3")
             {:discovery, :octopus, _} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Octopus)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Octopus, size: "is-size-3")
             {:stress, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Stress, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Stress, value: value, used?: used?, size: "is-size-3")
             {:oxygen, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Oxygen, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Oxygen, value: value, used?: used?, size: "is-size-3")
             {:damage, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Damage, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Damage, value: value, used?: used?, size: "is-size-3")
             {:ocean_floor, value, used?} ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.OceanFloor, value: value, used?: used?)
+              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.OceanFloor, value: value, used?: used?, size: "is-size-3")
           end
         %>
       <% end %>
