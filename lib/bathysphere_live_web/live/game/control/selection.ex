@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Game.Overview.Selection do
+defmodule BathysphereLiveWeb.Game.Control.Selection do
   use Phoenix.LiveComponent
 
   def render(assigns) do

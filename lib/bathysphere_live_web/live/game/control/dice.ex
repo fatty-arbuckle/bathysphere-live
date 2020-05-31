@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Game.Overview.Dice do
+defmodule BathysphereLiveWeb.Game.Control.Dice do
   use Phoenix.LiveComponent
 
   def render(assigns) do

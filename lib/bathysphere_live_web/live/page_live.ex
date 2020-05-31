@@ -17,38 +17,28 @@ defmodule BathysphereLiveWeb.PageLive do
   @impl true
   def render(%{game_state: %{state: :no_map}} = assigns) do
     ~L"""
-    <section class="hero">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Select a map to play
-          </h1>
-          <h2 class="subtitle">
-            <ul>
-              <%= for name <- @library do %>
-                <button class="button" phx-click="select-map" phx-value-map-name="<%= name %>"><%= name %></li>
-              <% end %>
-            </ul>
-          </h2>
-        </div>
-      </div>
-    </section>
+      <h1 class="title">
+        Select a map to play
+      </h1>
+      <h2 class="subtitle">
+        <ul>
+          <%= for name <- @library do %>
+            <button class="button" phx-click="select-map" phx-value-map-name="<%= name %>"><%= name %></li>
+          <% end %>
+        </ul>
+      </h2>
     """
   end
   def render(assigns) do
     ~L"""
-    <section class="hero">
-      <div class="hero-body">
-        <button class="button" phx-click="reset-game">RESET</button>
-        <div>
-          <%= live_component(
-            @socket,
-            BathysphereLiveWeb.GameComponent,
-            game_state: @game_state)
-          %>
-        </div>
+      <button class="button" phx-click="reset-game">RESET</button>
+      <div>
+        <%= live_component(
+          @socket,
+          BathysphereLiveWeb.GameComponent,
+          game_state: @game_state)
+        %>
       </div>
-    </section>
     """
   end
 

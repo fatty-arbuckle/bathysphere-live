@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Game.Overview.Resource do
+defmodule BathysphereLiveWeb.Game.Control.Resource do
   use Phoenix.LiveComponent
 
   # <div class="column is-one-fifth">

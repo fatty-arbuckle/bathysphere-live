@@ -1,4 +1,4 @@
-defmodule BathysphereLiveWeb.Game.Overview.Score do
+defmodule BathysphereLiveWeb.Game.Control.Score do
   use Phoenix.LiveComponent
 
   def render(assigns) do
@@ -40,7 +40,7 @@ defmodule BathysphereLiveWeb.Game.Overview.Score do
                   </span>
                 <% end %>
               </div>
-            </div>s
+            </div>
           </div>
         </div>
       </article>

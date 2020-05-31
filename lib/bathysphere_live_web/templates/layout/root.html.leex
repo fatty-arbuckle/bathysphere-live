@@ -10,8 +10,14 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <header>
-    </header>
-    <%= @inner_content %>
+    <div class="background-image">
+      <header>
+      </header>
+      <section class="hero underwater">
+        <div class="hero-body">
+          <%= @inner_content %>
+        </div>
+      </section>
+    </div>
   </body>
 </html>

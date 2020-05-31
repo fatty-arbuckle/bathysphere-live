@@ -6,12 +6,12 @@ defmodule BathysphereLiveWeb.GameComponent do
     <div class="has-text-centered">
       <div class="columns">
 
-        <!-- Game Overview -->
+        <!-- Control Panel -->
         <div class="column">
           <%=
             live_component(
               @socket,
-              BathysphereLiveWeb.Game.OverviewComponent,
+              BathysphereLiveWeb.Game.ControlComponent,
               state: @game_state.state,
               dice_pool_size: @game_state.dice_pool_size,
               dice_pool: @game_state.dice_pool,

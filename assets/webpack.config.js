@@ -25,35 +25,39 @@ module.exports = (env, options) => {
     },
     devtool: devMode ? 'source-map' : undefined,
     module: {
-rules: [
-      {   
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }   
-      },  
-      {   
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { } },
-          'postcss-loader',
-        ],  
-      },  
-      {   
-        test: /\.sass$|\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {   
-            loader: 'css-loader',
-            options: {  },  
-          },  
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' },
-        ],  
-      },  
-    ]  
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            { loader: 'css-loader', options: { } },
+            'postcss-loader',
+          ],
+        },
+        {
+          test: /\.sass$|\.scss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {  },
+            },
+            { loader: 'postcss-loader' },
+            { loader: 'sass-loader' },
+          ],
+        },
+        {
+          test: /\.(png|jpg)$/,
+          loader: 'url-loader'
+        }
+      ]
     },
     plugins: [
       new MiniCssExtractPlugin({ filename: '../css/app.css' }),

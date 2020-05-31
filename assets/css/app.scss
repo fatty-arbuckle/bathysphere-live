@@ -11,8 +11,6 @@ $opal-dark: #1F3230;
 $snow: #F8F4F9;
 $cadet-blue: #5CA4A9;
 
-
-
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
 $grey-dark: $opal-dark;
@@ -35,6 +33,15 @@ $input-shadow: none;
 hr {
   border: 5px solid $dark;
   border-radius: 5px;
+}
+
+.background-image {
+  background-image: url("../static/images/underwater.jpg") ;
+  background-position: center center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+  height: 100%;
 }
 
 .map-background {
