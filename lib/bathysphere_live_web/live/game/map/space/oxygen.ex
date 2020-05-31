@@ -6,10 +6,12 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Oxygen do
     <span
       class="<%= @size %> <%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
       has-tooltip-multiline
-      data-tooltip="Oxygen: <%= @value %>"
+      data-tooltip="Oxygen <%= if @value != nil, do: ": #{@value}" %>"
     >
       <i class="fas fa-soap"></i>
-      <%= @value %>
+      <%= if @value != nil do
+        @value
+      end %>
     </span>
     """
   end

@@ -6,10 +6,12 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Stress do
       <span
         class="<%= @size %> <%= if @used?, do: "has-text-gray", else: "has-text-danger" %>"
         has-tooltip-multiline
-        data-tooltip="Stress: <%= @value %>"
+        data-tooltip="Stress <%= if @value != nil, do: ": #{@value}" %>"
       >
         <i class="fas fa-exclamation-circle"></i>
-        <%= @value %>
+        <%= if @value != nil do
+          @value
+        end %>
       </span>
     """
   end

@@ -31,7 +31,6 @@ defmodule BathysphereLiveWeb.PageLive do
   end
   def render(assigns) do
     ~L"""
-      <button class="button" phx-click="reset-game">RESET</button>
       <div>
         <%= live_component(
           @socket,

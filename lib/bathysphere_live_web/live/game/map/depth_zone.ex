@@ -7,7 +7,7 @@ defmodule BathysphereLiveWeb.Game.Map.DepthZone do
       has-tooltip-multiline
       data-tooltip="Depth zone"
     >
-      <hr>
+      <hr class="depth">
     </span>
     """
   end
