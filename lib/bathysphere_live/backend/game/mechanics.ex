@@ -127,10 +127,12 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   # landing on a marked space
   defp evaluate_space({:space, %{marked?: true}}, %{ remaining: 0 } = game_state) do
     %{ game_state | stress: mark_resource(:stress, game_state.stress, 1) }
+    |> track_space(:landing_on_marked)
   end
   # passing over a marked space
   defp evaluate_space({:space, %{marked?: true}}, game_state) do
     game_state
+    |> track_space(:passing_marked)
   end
   # landing on an unmarked space
   defp evaluate_space({:space, %{actions: _actions} = data}, %{ remaining: 0 } = game_state) do
@@ -139,6 +141,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     %{ game_state |
       map: updated_map
     }
+    |> track_space(:landing_on_unmarked)
   end
   # passing over an unmarked space
   defp evaluate_space({:space, %{actions: actions}}, game_state) do
@@ -147,11 +150,34 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
       !used? and Enum.member?([:stress, :damage, :oxygen], type)
     end)
     apply_action(game_state, actions_remaining)
+    |> track_space(:passing_unmarked)
   end
   # passing by / landing on start (which is the finish)
   defp evaluate_space({:start, _}, game_state) do
     %{ game_state | state: :complete }
   end
+
+  defp track_space(game_state, :landing_on_marked), do: update_tracking(game_state, "landed again, -1 stress")
+  defp track_space(game_state, :passing_marked), do: update_tracking(game_state, "passing over")
+  defp track_space(game_state, :landing_on_unmarked), do: update_tracking(game_state, "landed safely")
+  defp track_space(game_state, :passing_unmarked), do: update_tracking(game_state, "passing with penalty")
+
+  defp update_tracking(game_state, info) do
+    {:space, space_data} = Enum.at(game_state.map, game_state.position)
+    updated_space = if Map.has_key?(space_data, :tracking) do
+      updated_tracking = space_data.tracking ++ [{info, get_direction(game_state.direction)}]
+      {:space, %{ space_data | tracking: updated_tracking }}
+    else
+      {:space, Map.put(space_data, :tracking, [{info, get_direction(game_state.direction)}])}
+    end
+    updated_map = List.replace_at(game_state.map, game_state.position, updated_space)
+    %{ game_state | map: updated_map }
+  end
+
+  defp get_direction(-1), do: :up
+  defp get_direction(1), do: :down
+  defp get_direction(_), do: :unknown
+
 
   defp apply_action(game_state, nil), do: game_state
   defp apply_action(game_state, []), do: game_state
