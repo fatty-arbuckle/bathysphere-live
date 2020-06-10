@@ -31,7 +31,7 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:stress, -1, false}], marked?: true } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: true, tracking: [{:down}] } },
       ],
       position: 1
     }
@@ -50,7 +50,7 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:stress, -1, false}], marked?: true } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: true, tracking: [{:down}] } },
       ],
       position: 1,
       stress: [{:stress, true},{:stress, false}]
@@ -70,7 +70,7 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true } },
+        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true, tracking: [{:down}] } },
       ],
       position: 1,
       score: 3,
@@ -92,7 +92,7 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true } },
+        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true, tracking: [{:down}] } },
       ],
       position: 1,
       score: 2,
@@ -118,11 +118,11 @@ defmodule MechanicsTest do
       dice_pool: [{5, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:oxygen, -1, false}], marked?: true } },
-        { :space, %{ actions: [{:stress, -1, true}], marked?: true } },
-        { :space, %{ actions: [{:damage, -2, true}], marked?: true } },
-        { :space, %{ actions: [{:stress, -1, false}], marked?: true } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [{:oxygen, -1, false}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -2, true}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 5
     }
@@ -146,10 +146,10 @@ defmodule MechanicsTest do
       dice_pool: [{3, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
         { :depth_zone, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
         { :space, %{ actions: [], marked?: false } },
       ],
       position: 4,
@@ -171,8 +171,8 @@ defmodule MechanicsTest do
       dice_pool: [{3, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 2,
       stress: [{:stress, true},{:stress, false}]
@@ -196,8 +196,8 @@ defmodule MechanicsTest do
       dice_pool: [{3, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [], marked?: false } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:up}] } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:up}] } },
         { :space, %{ actions: [], marked?: true } }
       ],
       position: 0,
@@ -226,10 +226,10 @@ defmodule MechanicsTest do
       map: [
         { :start, %{} },
         { :depth_zone, %{} },
-        { :space, %{ actions: [{:stress, -1, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: false } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
         { :depth_zone, %{} },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 5,
       stress: [{:stress, true},{:stress, true}]
@@ -253,10 +253,10 @@ defmodule MechanicsTest do
       dice_pool: [{4, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 4,
       damage: [{:damage, true},{:damage, true}]
@@ -279,9 +279,9 @@ defmodule MechanicsTest do
       dice_pool: [{3, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:oxygen, -2, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [{:oxygen, -2, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 3,
       oxygen: [{:oxygen, true},{:oxygen, true}]
@@ -306,12 +306,12 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}, {1, 1, true}, {1, 2, true}, {1, 3, true}, {1, 4, true}, {1, 5, true} ],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true } },
-        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true } },
-        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true } },
-        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true } },
-        { :space, %{ actions: [{:ocean_floor, +2, nil}], marked?: true } },
-        { :space, %{ actions: [{:ocean_floor, +4, nil}], marked?: true } }
+        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:discovery, :fish, nil}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:discovery, :octopus, nil}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:ocean_floor, +2, nil}], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [{:ocean_floor, +4, nil}], marked?: true, tracking: [{:down}] } }
       ],
       position: 6,
       score: 18,
@@ -342,10 +342,10 @@ defmodule MechanicsTest do
       dice_pool: [{1, 0, true}, {2, 1, true}, {6, 2, false}, {1, 3, false}, {1, 4, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
-        { :space, %{ actions: [], marked?: true } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
         { :space, %{ actions: [], marked?: false } },
       ],
       position: 4
@@ -441,11 +441,11 @@ defmodule MechanicsTest do
       dice_pool: [{5, 0, true}, {4, 1, false}, {5, 2, false}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [{:oxygen, -1, true}, {:stress, -1, false}], marked?: false } },
-        { :space, %{ actions: [{:stress, -1, true}, {:oxygen, -1, false}], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}, {:stress, -1, false}], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:oxygen, -1, true}, {:stress, -1, false}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}, {:oxygen, -1, false}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}, {:stress, -1, false}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
         { :space, %{ actions: [], marked?: false } }
       ],
       position: 5,
@@ -467,11 +467,11 @@ defmodule MechanicsTest do
       dice_pool: [{5, 0, true}, {4, 1, true}, {5, 2, false}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: true } },
-        { :space, %{ actions: [{:oxygen, -1, true}, {:stress, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:stress, -1, true}, {:oxygen, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}, {:stress, -1, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: true } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down},{:up}] } },
+        { :space, %{ actions: [{:oxygen, -1, true}, {:stress, -1, true}], marked?: false, tracking: [{:down},{:up}] } },
+        { :space, %{ actions: [{:stress, -1, true}, {:oxygen, -1, true}], marked?: false, tracking: [{:down},{:up}] } },
+        { :space, %{ actions: [{:damage, -1, true}, {:stress, -1, true}], marked?: false, tracking: [{:down},{:up}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
         { :space, %{ actions: [], marked?: false } }
       ],
       position: 1,
@@ -505,10 +505,10 @@ defmodule MechanicsTest do
       dice_pool: [{6, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, false}], marked?: false } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, false}], marked?: false, tracking: [{:down}] } },
         { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, false}], marked?: false } },
         { :space, %{ actions: [], marked?: false } }
       ],
@@ -523,11 +523,11 @@ defmodule MechanicsTest do
       dice_pool: [{6, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, false}], marked?: false } },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, false}], marked?: false, tracking: [{:down}] } },
         { :space, %{ actions: [], marked?: false } }
       ],
       position: 5,
@@ -541,12 +541,12 @@ defmodule MechanicsTest do
       dice_pool: [{6, 0, true}],
       map: [
         { :start, %{} },
-        { :space, %{ actions: [], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:damage, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, true}], marked?: false } },
-        { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, true}], marked?: false } },
-        { :space, %{ actions: [], marked?: true } }
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:damage, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:oxygen, -1, false}, {:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, false}, {:oxygen, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } }
       ],
       position: 6,
       remaining: 0,

@@ -157,18 +157,15 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     %{ game_state | state: :complete }
   end
 
-  defp track_space(game_state, :landing_on_marked), do: update_tracking(game_state, "landed again, -1 stress")
-  defp track_space(game_state, :passing_marked), do: update_tracking(game_state, "passing over")
-  defp track_space(game_state, :landing_on_unmarked), do: update_tracking(game_state, "landed safely")
-  defp track_space(game_state, :passing_unmarked), do: update_tracking(game_state, "passing with penalty")
+  defp track_space(game_state, _ignore), do: update_tracking(game_state)
 
-  defp update_tracking(game_state, info) do
+  defp update_tracking(game_state) do
     {:space, space_data} = Enum.at(game_state.map, game_state.position)
     updated_space = if Map.has_key?(space_data, :tracking) do
-      updated_tracking = space_data.tracking ++ [{info, get_direction(game_state.direction)}]
+      updated_tracking = space_data.tracking ++ [{get_direction(game_state.direction)}]
       {:space, %{ space_data | tracking: updated_tracking }}
     else
-      {:space, Map.put(space_data, :tracking, [{info, get_direction(game_state.direction)}])}
+      {:space, Map.put(space_data, :tracking, [{get_direction(game_state.direction)}])}
     end
     updated_map = List.replace_at(game_state.map, game_state.position, updated_space)
     %{ game_state | map: updated_map }

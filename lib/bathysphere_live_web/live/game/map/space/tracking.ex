@@ -4,11 +4,9 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Tracking do
   def render(assigns) do
     ~L"""
       <div class="is-pulled-left">
-        <%= for { info, direction } <- @tracking do %>
+        <%= for { direction } <- @tracking do %>
           <span
             class="has-text-dark is-size-3"
-            has-tooltip-multiline
-            data-tooltip="<%= info %>"
           >
             <i class="fas <%= direction_icon(direction) %>"></i>
           </span>
@@ -17,8 +15,8 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Tracking do
     """
   end
 
-  defp direction_icon(:up), do: "fa-chevron-up"
-  defp direction_icon(:down), do: "fa-chevron-down"
+  defp direction_icon(:up), do: "fa-long-arrow-alt-up"
+  defp direction_icon(:down), do: "fa-long-arrow-alt-down"
   defp direction_icon(:unknown), do: "fa-sort-question-circle"
 
 end
