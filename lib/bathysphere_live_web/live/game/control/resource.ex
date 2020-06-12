@@ -1,25 +1,39 @@
 defmodule BathysphereLiveWeb.Game.Control.Resource do
   use Phoenix.LiveComponent
 
-  # <div class="column is-one-fifth">
-  #   <span class="is-size-4 has-text-info">
-  #     <%= @label %>
-  #   </span>
-  # </div>
-
   def render(assigns) do
     ~L"""
     <div class="columns is-vcentered">
       <div class="column has-text-left">
         <%= for %{type: type, used?: used?, penalties: penalties} <- @resource do %>
-          <%= case type do
-            :stress ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Resource, resource: :stress, value: nil, used?: translate_used(used?), size: "is-size-3")
-            :oxygen ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Resource, resource: :oxygen, value: nil, used?: translate_used(used?), size: "is-size-3")
-            :damage ->
-              live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Resource, resource: :damage, value: nil, used?: translate_used(used?), size: "is-size-3")
-          end %>
+          <%=
+            live_component(
+              @socket,
+              BathysphereLiveWeb.Game.Resources.Resource,
+              type: type,
+              value: nil,
+              used?: translate_used(used?),
+              size: "is-size-3"
+            )
+          %>
+          <%= for penalty <- penalties do %>
+            <span class="is-size-3">
+              (
+            </span>
+            <%=
+              live_component(
+                @socket,
+                BathysphereLiveWeb.Game.Resources.Resource,
+                type: penalty,
+                value: -1,
+                used?: translate_used(used?),
+                size: "is-size-3"
+              )
+            %>
+            <span class="is-size-3">
+              )
+            </span>
+          <% end %>
         <% end %>
       </div>
     </columns>

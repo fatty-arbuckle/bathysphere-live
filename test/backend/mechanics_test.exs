@@ -735,9 +735,75 @@ defmodule MechanicsTest do
   end
 
   test "triggering damage from stress" do
+    game_state = %{ @base_state |
+      dice_pool: [{6, 0, false}],
+      map: [
+        { :start, %{} },
+        { :space, %{ actions: [], marked?: false } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: false } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: false } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: false } },
+        { :space, %{ actions: [{:stress, -1, false}], marked?: false } },
+        { :space, %{ actions: [], marked?: false } }
+      ],
+      position: 0,
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
+    }
+    expected_state = %{ game_state |
+      state: :dead,
+      dice_pool: [{6, 0, true}],
+      map: [
+        { :start, %{} },
+        { :space, %{ actions: [], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [{:stress, -1, true}], marked?: false, tracking: [{:down}] } },
+        { :space, %{ actions: [], marked?: true, tracking: [{:down}] } }
+      ],
+      position: 6,
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true, penalties: [:damage]},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true}
+        ]
+      }
+    }
+    assert {expected_state.state, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 6, 0)
   end
 
-  test "losing dice from oxygen" do
+  test "losing dice from damage" do
   end
 
 end

@@ -190,26 +190,41 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
 
   defp mark_resource(_type, resources, 0), do: resources
   defp mark_resource(:stress, resources, data) do
-    resources = %{ resources |
-      stress: replace_resource(:stress, resources.stress)
-    }
+    { penalties, updated_resource } = replace_resource(resources.stress)
+    resources = %{ resources | stress: updated_resource }
+    resources = enforce_penalties(penalties, resources)
     mark_resource(:stress, resources, data - 1)
   end
   defp mark_resource(:damage, resources, data) do
-    resources = %{ resources |
-      damage: replace_resource(:damage, resources.damage)
-    }
+    { penalties, updated_resource } = replace_resource(resources.damage)
+    resources = %{ resources | damage: updated_resource }
+    resources = enforce_penalties(penalties, resources)
     mark_resource(:damage, resources, data - 1)
   end
   defp mark_resource(:oxygen, resources, data) do
-    resources = %{ resources |
-      oxygen: replace_resource(:oxygen, resources.oxygen)
-    }
+    { penalties, updated_resource } = replace_resource(resources.oxygen)
+    resources = %{ resources | oxygen: updated_resource }
+    resources = enforce_penalties(penalties, resources)
     mark_resource(:oxygen, resources, data - 1)
   end
 
-  defp replace_resource(type, resource) do
-    [ %BathysphereLive.Backend.Game.Resource{type: type, used?: true}] ++ Enum.drop(resource, -1)
+  defp replace_resource(resource) do
+    case Enum.find_index(resource, fn %{used?: used?} -> used? == false  end) do
+      nil ->
+        { [], resource }
+      next_index ->
+        %{penalties: penalties} = Enum.at(resource, next_index)
+        {
+          penalties,
+          List.replace_at(resource, next_index, %{ Enum.at(resource, next_index) | used?: true })
+        }
+    end
+  end
+
+  defp enforce_penalties(penalties, resources) do
+    Enum.reduce(penalties, resources, fn type, acc ->
+      mark_resource(type, acc, 1)
+    end)
   end
 
 
