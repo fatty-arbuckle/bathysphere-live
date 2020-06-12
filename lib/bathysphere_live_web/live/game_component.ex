@@ -20,9 +20,7 @@ defmodule BathysphereLiveWeb.GameComponent do
               octopus_points: @game_state.octopus_points,
               fish_count: @game_state.fish_count,
               octopus_count: @game_state.octopus_count,
-              oxygen: @game_state.oxygen,
-              stress: @game_state.stress,
-              damage: @game_state.damage,
+              resources: @game_state.resources,
               remaining: @game_state.remaining
             )
           %>

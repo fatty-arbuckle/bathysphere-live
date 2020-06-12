@@ -62,11 +62,7 @@ defmodule BathysphereLiveWeb.Game.ControlComponent do
 
           <hr/>
 
-          <%= live_component(@socket, BathysphereLiveWeb.Game.Control.Resources,
-            oxygen: @oxygen,
-            stress: @stress,
-            damage: @damage
-          ) %>
+          <%= live_component(@socket, BathysphereLiveWeb.Game.Control.Resources, resources: @resources) %>
         </div>
       </article>
     """

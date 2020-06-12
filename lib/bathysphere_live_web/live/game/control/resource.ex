@@ -11,8 +11,8 @@ defmodule BathysphereLiveWeb.Game.Control.Resource do
     ~L"""
     <div class="columns is-vcentered">
       <div class="column has-text-left">
-        <%= for {resource, used?} <- @resource do %>
-          <%= case resource do
+        <%= for %{type: type, used?: used?, penalties: penalties} <- @resource do %>
+          <%= case type do
             :stress ->
               live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Resource, resource: :stress, value: nil, used?: translate_used(used?), size: "is-size-3")
             :oxygen ->
