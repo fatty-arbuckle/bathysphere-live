@@ -10,9 +10,20 @@ defmodule MechanicsTest do
     remaining: 0,
     direction: 1,
     score: 0,
-    oxygen: [{:oxygen, false},{:oxygen, false}],
-    stress: [{:stress, false},{:stress, false}],
-    damage: [{:damage, false},{:damage, false}],
+    resources: %{
+      oxygen: [
+        %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+        %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+      ],
+      stress: [
+        %BathysphereLive.Backend.Game.Resource{type: :stress},
+        %BathysphereLive.Backend.Game.Resource{type: :stress}
+      ],
+      damage: [
+        %BathysphereLive.Backend.Game.Resource{type: :damage},
+        %BathysphereLive.Backend.Game.Resource{type: :damage}
+      ]
+    },
     fish_points: [+2, +2, +3],
     octopus_points: [+3, +5],
     fish_count: 0,
@@ -53,7 +64,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [{:stress, -1, false}], marked?: true, tracking: [{:down}] } },
       ],
       position: 1,
-      stress: [{:stress, true},{:stress, false}]
+      resources: %{ game_state.resources |
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false}
+        ]
+      }
     }
     assert {:ok, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 1, 0)
   end
@@ -153,7 +169,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: false } },
       ],
       position: 4,
-      stress: [{:stress, true},{:stress, true}]
+      resources: %{ game_state.resources |
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+        ]
+      }
     }
     assert {:dead, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 3, 0)
   end
@@ -175,7 +196,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 2,
-      stress: [{:stress, true},{:stress, false}]
+      resources: %{ game_state.resources |
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+        ]
+      }
     }
     assert {:ok, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 3, 0)
   end
@@ -232,7 +258,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 5,
-      stress: [{:stress, true},{:stress, true}]
+      resources: %{ game_state.resources |
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+        ]
+      }
     }
     assert {:dead, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 3, 0)
   end
@@ -259,7 +290,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 4,
-      damage: [{:damage, true},{:damage, true}]
+      resources: %{ game_state.resources |
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+        ]
+      }
     }
     assert {:dead, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 4, 0)
   end
@@ -284,7 +320,12 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: true, tracking: [{:down}] } },
       ],
       position: 3,
-      oxygen: [{:oxygen, true},{:oxygen, true}]
+      resources: %{ game_state.resources |
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+        ]
+      }
     }
     assert {:dead, expected_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 3, 0)
   end
@@ -391,26 +432,40 @@ defmodule MechanicsTest do
   test "re-population of the dice pool" do
     game_state = %{ @base_state |
       dice_pool_size: 3,
-      dice_pool: [{7, 0, false}, {8, 1, false}, {9, 2, false}],
-      oxygen: [{:oxygen, false},{:oxygen, false}]
+      dice_pool: [{7, 0, false}, {8, 1, false}, {9, 2, false}]
     }
     { :ok, updated_state } = BathysphereLive.Backend.Game.Mechanics.roll(game_state)
     assert game_state.dice_pool_size == Enum.count(updated_state.dice_pool)
     assert game_state.dice_pool != updated_state.dice_pool
-    assert [{:oxygen, true},{:oxygen, false}] = updated_state.oxygen
+    assert [
+      %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+      %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+    ] == updated_state.resources.oxygen
   end
 
   test "rerolling the dice can kill you" do
     game_state = %{ @base_state |
       dice_pool_size: 3,
       dice_pool: [{1, 0, false}, {5, 1, false}, {2, 2, false}],
-      oxygen: [{:oxygen, true},{:oxygen, false}]
+      resources: %{
+        stress: [],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: []
+      }
     }
     expected_state = %{ game_state |
       state: :dead,
       dice_pool_size: 3,
       dice_pool: [{1, 0, false}, {5, 1, false}, {2, 2, false}],
-      oxygen: [{:oxygen, true},{:oxygen, true}]
+      resources: %{ game_state.resources |
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+        ]
+      }
     }
     { final_state, updated_state } = BathysphereLive.Backend.Game.Mechanics.roll(game_state)
     assert {:dead, expected_state} == {
@@ -431,9 +486,26 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: false } }
       ],
       position: 0,
-      stress: [{:stress, false},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, false},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, false},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+        ]
+      }
     }
 
     first_state = %{ game_state |
@@ -450,9 +522,26 @@ defmodule MechanicsTest do
       ],
       position: 5,
       direction: 1,
-      stress: [{:stress, true},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, true},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, true},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: false}
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: false}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: false}
+        ]
+      }
     }
     assert {:ok, first_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 5, 0)
       |> elem(1)
@@ -476,9 +565,26 @@ defmodule MechanicsTest do
       ],
       position: 1,
       direction: -1,
-      stress: [{:stress, true},{:stress, true},{:stress, true},{:stress, false}],
-      oxygen: [{:oxygen, true},{:oxygen, true},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, true},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{ game_state.resources |
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
     }
     assert {:ok, second_state} == BathysphereLive.Backend.Game.Mechanics.up(first_state, 4, 1)
   end
@@ -496,9 +602,26 @@ defmodule MechanicsTest do
         { :space, %{ actions: [], marked?: false } }
       ],
       position: 0,
-      stress: [{:stress, false},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, false},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, false},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
     }
     select1_state = %{ game_state |
       state: {:select_action, [{{:oxygen, -1, false}, 0}, {{:stress, -1, false}, 1}]},
@@ -514,9 +637,26 @@ defmodule MechanicsTest do
       ],
       position: 4,
       remaining: 2,
-      stress: [{:stress, false},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, false},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, true},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
     }
     select2_state = %{ select1_state |
       state: {:select_action, [{{:stress, -1, false}, 0}, {{:oxygen, -1, false}, 1}]},
@@ -532,9 +672,26 @@ defmodule MechanicsTest do
       ],
       position: 5,
       remaining: 1,
-      stress: [{:stress, true},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, false},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, true},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
     }
     final_state = %{ select2_state |
       state: :ok,
@@ -550,9 +707,26 @@ defmodule MechanicsTest do
       ],
       position: 6,
       remaining: 0,
-      stress: [{:stress, true},{:stress, false},{:stress, false},{:stress, false}],
-      oxygen: [{:oxygen, true},{:oxygen, false},{:oxygen, false},{:oxygen, false}],
-      damage: [{:damage, true},{:damage, false},{:damage, false},{:damage, false}]
+      resources: %{
+        stress: [
+          %BathysphereLive.Backend.Game.Resource{type: :stress, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+          %BathysphereLive.Backend.Game.Resource{type: :stress},
+        ],
+        oxygen: [
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen},
+          %BathysphereLive.Backend.Game.Resource{type: :oxygen}
+        ],
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage, used?: true},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage}
+        ]
+      }
     }
 
     assert {select1_state.state, select1_state} == BathysphereLive.Backend.Game.Mechanics.down(game_state, 6, 0)

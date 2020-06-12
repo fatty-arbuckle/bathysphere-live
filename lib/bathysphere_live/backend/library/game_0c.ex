@@ -88,9 +88,11 @@ defmodule BathysphereLive.Backend.Library.Game0c do
         { :space, %{ actions: [{:discovery, :octopus, false}], marked?: false } },
         { :space, %{ actions: [{:ocean_floor, +6, false}], marked?: false } }
       ],
-      oxygen: Enum.map(0..12, fn _ -> {:oxygen, false} end),
-      stress: Enum.map(0..20, fn _ -> {:stress, false} end),
-      damage: Enum.map(0..6, fn _ -> {:damage, false} end),
+      resources: %{
+        oxygen: Enum.map(0..12, fn _ -> %BathysphereLive.Backend.Game.Resource{type: :oxygen} end),
+        stress: Enum.map(0..20, fn _ -> %BathysphereLive.Backend.Game.Resource{type: :stress} end),
+        damage: Enum.map(0..6, fn _ -> %BathysphereLive.Backend.Game.Resource{type: :damage} end),
+      },
       fish_points: [+2, +3, +4, +5, +6, +7],
       octopus_points: [+1, +2, +3, +4, +8, +12]
     }

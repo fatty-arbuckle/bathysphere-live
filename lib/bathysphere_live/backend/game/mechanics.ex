@@ -7,7 +7,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   def roll(game_state) do
     new_state = %{ game_state |
       dice_pool: roll_dice(game_state.dice_pool_size),
-      oxygen: mark_resource(:oxygen, game_state.oxygen, 1)
+      resources: mark_resource(:oxygen, game_state.resources, 1)
     }
     |> evaluate_game
     { new_state.state, new_state }
@@ -24,11 +24,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
       state: :ok,
       map: List.replace_at(game_state.map, game_state.position, updated_space)
     }
-    updated_game_state = case type do
-      :stress -> %{ updated_game_state | stress: mark_resource(:stress, updated_game_state.stress, abs(value)) }
-      :damage -> %{ updated_game_state | damage: mark_resource(:damage, updated_game_state.damage, abs(value)) }
-      :oxygen -> %{ updated_game_state | oxygen: mark_resource(:oxygen, updated_game_state.oxygen, abs(value)) }
-    end
+    updated_game_state = %{ updated_game_state | resources: mark_resource(type, updated_game_state.resources, abs(value)) }
     updated_game_state = move(updated_game_state)
     {updated_game_state.state, updated_game_state}
   end
@@ -89,7 +85,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
           map: updated_map,
           position: position,
           remaining: 0,
-          stress: mark_resource(:stress, game_state.stress, remaining)
+          resources: mark_resource(:stress, game_state.resources, remaining)
         }
       {:ok, new_position} ->
         game_state = %{ game_state |
@@ -119,14 +115,14 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   end
 
   defp evaluate_space({:depth_zone, _}, %{ remaining: remaining } = game_state) do
-    game_state = %{ game_state | stress: mark_resource(:stress, game_state.stress, abs(remaining + 1)) }
+    game_state = %{ game_state | resources: mark_resource(:stress, game_state.resources, abs(remaining + 1)) }
     # TODO special handling for depth_zone as bottom or top
     game_state = %{ game_state | remaining: remaining + 1 }
     move(game_state)
   end
   # landing on a marked space
   defp evaluate_space({:space, %{marked?: true}}, %{ remaining: 0 } = game_state) do
-    %{ game_state | stress: mark_resource(:stress, game_state.stress, 1) }
+    %{ game_state | resources: mark_resource(:stress, game_state.resources, 1) }
     |> track_space(:landing_on_marked)
   end
   # passing over a marked space
@@ -179,11 +175,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   defp apply_action(game_state, nil), do: game_state
   defp apply_action(game_state, []), do: game_state
   defp apply_action(game_state, [ {{type, data, false}, idx} ]) do
-    game_state = case type do
-      :stress -> %{ game_state | stress: mark_resource(:stress, game_state.stress, abs(data)) }
-      :damage -> %{ game_state | damage: mark_resource(:damage, game_state.damage, abs(data)) }
-      :oxygen -> %{ game_state | oxygen: mark_resource(:oxygen, game_state.oxygen, abs(data)) }
-    end
+    game_state = %{ game_state | resources: mark_resource(type, game_state.resources, abs(data)) }
     {:space, space_data} = Enum.at(game_state.map, game_state.position)
     updated_actions = List.replace_at(space_data.actions, idx, {type, data, true})
     updated_space = {:space, %{ space_data | actions: updated_actions }}
@@ -197,10 +189,30 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   end
 
   defp mark_resource(_type, resources, 0), do: resources
-  defp mark_resource(type, resources, data) do
-    resources = [{type, true}] ++ Enum.drop(resources, -1)
-    mark_resource(type, resources, data - 1)
+  defp mark_resource(:stress, resources, data) do
+    resources = %{ resources |
+      stress: replace_resource(:stress, resources.stress)
+    }
+    mark_resource(:stress, resources, data - 1)
   end
+  defp mark_resource(:damage, resources, data) do
+    resources = %{ resources |
+      damage: replace_resource(:damage, resources.damage)
+    }
+    mark_resource(:damage, resources, data - 1)
+  end
+  defp mark_resource(:oxygen, resources, data) do
+    resources = %{ resources |
+      oxygen: replace_resource(:oxygen, resources.oxygen)
+    }
+    mark_resource(:oxygen, resources, data - 1)
+  end
+
+  defp replace_resource(type, resource) do
+    [ %BathysphereLive.Backend.Game.Resource{type: type, used?: true}] ++ Enum.drop(resource, -1)
+  end
+
+
 
   defp evaluate_game(game_state) do
     game_state
@@ -212,7 +224,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
   end
 
   defp evaluate_resource(game_state, resource) do
-    case Enum.any?(get_resource(game_state, resource), fn {_, used?} -> !used? end) do
+    case Enum.any?(get_resource(game_state, resource), fn %BathysphereLive.Backend.Game.Resource{used?: used?} -> !used? end) do
       false ->
         %{ game_state | state: :dead }
       true ->
@@ -220,9 +232,9 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     end
   end
 
-  defp get_resource(game_state, :stress), do: game_state.stress
-  defp get_resource(game_state, :damage), do: game_state.damage
-  defp get_resource(game_state, :oxygen), do: game_state.oxygen
+  defp get_resource(game_state, :stress), do: game_state.resources.stress
+  defp get_resource(game_state, :damage), do: game_state.resources.damage
+  defp get_resource(game_state, :oxygen), do: game_state.resources.oxygen
 
   defp evaluate_points(game_state) do
     {fish, octopus, points} = Enum.reduce(game_state.map, {0, 0, 0}, fn {space_type, data}, {fish, octopus, points} ->

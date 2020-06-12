@@ -9,9 +9,11 @@ defmodule BathysphereLive.Backend.Game.State do
     remaining: 0,
     direction: 0,
     score: 0,
-    stress: [],
-    damage: [],
-    oxygen: [],
+    resources: %{
+      stress: [],
+      damage: [],
+      oxygen: []
+    },
     fish_points: [],
     octopus_points: [],
     fish_count: 0,
