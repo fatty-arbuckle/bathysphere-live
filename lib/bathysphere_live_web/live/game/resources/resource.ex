@@ -23,6 +23,7 @@ defmodule BathysphereLiveWeb.Game.Resources.Resource do
   defp icon(:stress), do: "fa-exclamation-circle"
   defp icon(:damage), do: "fa-skull"
   defp icon(:oxygen), do: "fa-soap"
+  defp icon(:dice), do: "fa-dice"
 
   defp label(type) do
     Atom.to_string(type)

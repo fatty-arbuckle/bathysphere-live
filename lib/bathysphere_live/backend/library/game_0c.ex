@@ -7,7 +7,6 @@ defmodule BathysphereLive.Backend.Library.Game0c do
 
   def game do
     %BathysphereLive.Backend.Game.State{
-      dice_pool_size: 5,
       map: [
         { :start, %{} },
         { :space, %{ actions: [{:discovery, :fish, false}], marked?: false } },
@@ -89,6 +88,7 @@ defmodule BathysphereLive.Backend.Library.Game0c do
         { :space, %{ actions: [{:ocean_floor, +6, false}], marked?: false } }
       ],
       resources: %{
+        dice_pool_size: 5,
         oxygen: Enum.map(0..12, fn _ -> %BathysphereLive.Backend.Game.Resource{type: :oxygen} end),
         stress: [
           %BathysphereLive.Backend.Game.Resource{type: :stress},
@@ -114,7 +114,16 @@ defmodule BathysphereLive.Backend.Library.Game0c do
           %BathysphereLive.Backend.Game.Resource{type: :stress, penalties: [:damage]},
           %BathysphereLive.Backend.Game.Resource{type: :stress},
         ],
-        damage: Enum.map(0..6, fn _ -> %BathysphereLive.Backend.Game.Resource{type: :damage} end),
+        damage: [
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, penalties: [:dice]},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, penalties: [:dice]},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, penalties: [:dice]},
+          %BathysphereLive.Backend.Game.Resource{type: :damage, penalties: [:dice]},
+          %BathysphereLive.Backend.Game.Resource{type: :damage},
+        ]
       },
       fish_points: [+2, +3, +4, +5, +6, +7],
       octopus_points: [+1, +2, +3, +4, +8, +12]

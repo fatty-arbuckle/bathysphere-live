@@ -3,7 +3,6 @@ defmodule BathysphereLiveWeb.Game.ControlComponent do
 
   def render(assigns) do
     ~L"""
-
       <article class="message is-primary">
         <div class="message-header">
           <span class="is-size-3">
@@ -43,7 +42,7 @@ defmodule BathysphereLiveWeb.Game.ControlComponent do
 
           <%= case @state do
             :ok ->
-              live_component(@socket, BathysphereLiveWeb.Game.Control.Dice, dice_pool: @dice_pool)
+              live_component(@socket, BathysphereLiveWeb.Game.Control.Dice, dice_pool: @resources.dice_pool)
             :dead ->
               live_component(@socket, BathysphereLiveWeb.Game.Control.Dead)
             {:select_action, choices} ->

@@ -1,14 +1,13 @@
 defmodule BathysphereLive.Backend.Game.Mechanics do
 
   def roll(game_state, :init) do
-    new_state = %{ game_state | dice_pool: roll_dice(game_state.dice_pool_size) }
+    new_state = update_dice_pool(game_state, roll_dice(game_state.resources.dice_pool_size))
     { new_state.state, new_state }
   end
   def roll(game_state) do
-    new_state = %{ game_state |
-      dice_pool: roll_dice(game_state.dice_pool_size),
-      resources: mark_resource(:oxygen, game_state.resources, 1)
-    }
+    new_state = game_state
+    |> update_dice_pool(roll_dice(game_state.resources.dice_pool_size))
+    new_state = Map.put(new_state, :resources, mark_resource(:oxygen, new_state.resources, 1))
     |> evaluate_game
     { new_state.state, new_state }
   end
@@ -29,7 +28,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     {updated_game_state.state, updated_game_state}
   end
 
-  def up(%{state: :ok, dice_pool: dice_pool} = game_state, n, index) do
+  def up(%{state: :ok, resources: %{ dice_pool: dice_pool } } = game_state, n, index) do
     {die, _idx, used?} = Enum.at(dice_pool, index)
     cond do
       die != n ->
@@ -38,14 +37,12 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
         {:invalid_move, game_state}
       !used? ->
         updated = move(%{ game_state | remaining: n, direction: -1 })
-        {updated.state, %{ updated |
-          dice_pool: List.replace_at(dice_pool, index, {die, index, true})}
-        }
+        { updated.state, update_dice_pool(updated, List.replace_at(dice_pool, index, {die, index, true})) }
     end
   end
   def up(%{state: state} = game_state, _n, _index), do: {state, game_state}
 
-  def down(%{state: :ok, dice_pool: dice_pool} = game_state, n, index) do
+  def down(%{state: :ok, resources: %{ dice_pool: dice_pool } } = game_state, n, index) do
     {die, _idx, used?} = Enum.at(dice_pool, index)
     cond do
       die != n ->
@@ -54,9 +51,7 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
         {:invalid_move, game_state}
       !used? ->
         updated = move(%{ game_state | remaining: n, direction: +1 })
-        {updated.state, %{ updated |
-          dice_pool: List.replace_at(dice_pool, index, {die, index, true})}
-        }
+        {updated.state, update_dice_pool(updated, List.replace_at(dice_pool, index, {die, index, true}))}
     end
   end
   def down(%{state: state} = game_state, _n, _index), do: {state, game_state}
@@ -66,6 +61,13 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     Enum.map(0..(n-1), fn idx ->
       { :rand.uniform(6), idx, false }
     end)
+  end
+
+  # returns a game_state with the dice_pool updated
+  defp update_dice_pool(game_state, new_dice_pool) do
+    %{ game_state |
+      resources: Map.put(game_state.resources, :dice_pool, new_dice_pool)
+    }
   end
 
   defp move(%{ remaining: 0 } = game_state) do
@@ -206,6 +208,11 @@ defmodule BathysphereLive.Backend.Game.Mechanics do
     resources = %{ resources | oxygen: updated_resource }
     resources = enforce_penalties(penalties, resources)
     mark_resource(:oxygen, resources, data - 1)
+  end
+  defp mark_resource(:dice, resources, _data) do
+    %{ resources |
+      dice_pool_size: resources.dice_pool_size - 1
+    }
   end
 
   defp replace_resource(resource) do

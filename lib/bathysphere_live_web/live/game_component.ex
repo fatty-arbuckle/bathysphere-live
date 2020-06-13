@@ -13,8 +13,6 @@ defmodule BathysphereLiveWeb.GameComponent do
               @socket,
               BathysphereLiveWeb.Game.ControlComponent,
               state: @game_state.state,
-              dice_pool_size: @game_state.dice_pool_size,
-              dice_pool: @game_state.dice_pool,
               score: @game_state.score,
               fish_points: @game_state.fish_points,
               octopus_points: @game_state.octopus_points,
