@@ -12,8 +12,6 @@ defmodule BathysphereLiveWeb.Game.MapComponent do
         <div class="row">
           <div class="columns">
             <div class="column is-1 has-text-centered"></div>
-
-
             <div class="column is-10 has-text-centered">
               <%= if idx == @position do %>
                 <div class="box has-background-info">
@@ -33,8 +31,6 @@ defmodule BathysphereLiveWeb.Game.MapComponent do
               <% end %>
 
             </div>
-
-
             <div class="column is-1 has-text-centered"></div>
           </div>
         </div>

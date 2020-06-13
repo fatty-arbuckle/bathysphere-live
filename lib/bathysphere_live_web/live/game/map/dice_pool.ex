@@ -1,11 +1,29 @@
-defmodule BathysphereLiveWeb.Game.Control.Dice do
+defmodule BathysphereLiveWeb.Game.Map.DicePool do
   use Phoenix.LiveComponent
 
   def render(assigns) do
     ~L"""
-      <article class="message is-primary has-text-centered">
-        <div>
+      <div class="row">
+        <div class="columns">
+          <!-- TODO: extract his 1-10-1 column pattern to share here and in space.ex -->
+          <div class="column is-1 has-text-centered"></div>
+          <div class="column is-10 has-text-centered">
+
+
+          <div class="box">
           <div class="columns is-vcentered">
+            <div class="column">
+              <div
+                class="button is-text"
+                has-tooltip-multiline
+                data-tooltip="Reroll your dice"
+                phx-click="dice-pool-reroll"
+              >
+                <span class="is-size-1 has-text-info">
+                  <i class="fas fa-dice"></i>
+                </span>
+              </div>
+            </div>
             <%= for {value, index, used?} <- @dice_pool do %>
               <div class="column">
                 <ul>
@@ -21,7 +39,7 @@ defmodule BathysphereLiveWeb.Game.Control.Dice do
                       disabled
                     <% end %>
                   >
-                    <span class="is-size-3">
+                    <span class="is-size-5">
                       <i class="fas fa-chevron-up"></i>
                     </span>
                   </li>
@@ -42,7 +60,7 @@ defmodule BathysphereLiveWeb.Game.Control.Dice do
                       disabled
                     <% end %>
                   >
-                    <span class="is-size-3">
+                    <span class="is-size-5">
                       <i class="fas fa-chevron-down"></i>
                     </span>
                   </li>
@@ -50,10 +68,22 @@ defmodule BathysphereLiveWeb.Game.Control.Dice do
               </div>
             <% end %>
           </div>
+          </div>
+
+
+
+          </div>
+          <div class="column is-1 has-text-centered"></div>
         </div>
-      </article>
+      </div>
+
+
+
+
+
     """
   end
+  # <article class="message is-primary has-text-centered">
 
   defp die(1), do: "fa-dice-one"
   defp die(2), do: "fa-dice-two"

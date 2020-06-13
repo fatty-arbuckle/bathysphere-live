@@ -25,10 +25,28 @@ defmodule BathysphereLiveWeb.GameComponent do
         </div>
 
         <!-- Game Map -->
-        <div class="column map-container">
-          <%=
-            live_component(@socket, BathysphereLiveWeb.Game.MapComponent, map: @game_state.map, position: @game_state.position)
-          %>
+        <div class="column">
+          <div class="rows">
+            <div class"row">
+              <div class="rows dice-pool">
+                <%= case @game_state.state do
+                  :ok ->
+                    live_component(@socket, BathysphereLiveWeb.Game.Map.DicePool, dice_pool: @game_state.resources.dice_pool)
+                  :dead ->
+                    live_component(@socket, BathysphereLiveWeb.Game.Control.Dead)
+                  {:select_action, choices} ->
+                    live_component(@socket, BathysphereLiveWeb.Game.Control.Selection, choices: choices, remaining: @game_state.remaining)
+                end %>
+              </div>
+            </div>
+            <div class"row">
+              <div class="map-container">
+                <%=
+                  live_component(@socket, BathysphereLiveWeb.Game.MapComponent, map: @game_state.map, position: @game_state.position)
+                %>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
