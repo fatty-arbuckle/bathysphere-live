@@ -31,7 +31,7 @@ $input-shadow: none;
 @import 'bulma-tooltip';
 
 hr {
-  border: 1px solid $dark;  
+  border: 1px solid $dark;
 }
 
 hr.depth {
@@ -50,4 +50,14 @@ hr.depth {
 
 .map-background {
   background: linear-gradient($grey-dark, $grey-dark) no-repeat center/20px 99%;
+}
+
+.map-container {
+  height:99vh;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+.map-container::-webkit-scrollbar { /* WebKit */
+    width: 0;
 }
