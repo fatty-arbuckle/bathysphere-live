@@ -3,8 +3,8 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
 
   def render(assigns) do
     ~L"""
-      <article class="message is-primary">
-        <div class="message-header">
+      <div class="box">
+        <div class="">
           <span class="has-text-left">
             Make a Selection
           </span>
@@ -12,7 +12,7 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
             <%= @remaining %> spaces to go
           </span>
         </div>
-        <div class="message-body has-text-centered">
+        <div class="has-text-centered">
           <div class="columns">
             <%= for {{resource, cost, used?}, index} <- @choices do %>
               <div class="column">
@@ -29,11 +29,11 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
                       <%=
                         case resource do
                           :stress ->
-                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Stress, value: cost, used?: used?, size: "is-size-1")
+                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Stress, value: cost, used?: used?, size: "is-size-3")
                           :oxygen ->
-                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Oxygen, value: cost, used?: used?, size: "is-size-1")
+                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Oxygen, value: cost, used?: used?, size: "is-size-3")
                           :damage ->
-                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Damage, value: cost, used?: used?, size: "is-size-1")
+                            live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Damage, value: cost, used?: used?, size: "is-size-3")
                         end
                       %>
                     </button>
@@ -44,7 +44,7 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
             <% end %>
           </div>
         </div>
-      </article>
+      </div>
     """
   end
 

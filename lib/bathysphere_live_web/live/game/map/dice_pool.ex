@@ -4,13 +4,7 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
   def render(assigns) do
     ~L"""
       <div class="row">
-        <div class="columns">
-          <!-- TODO: extract his 1-10-1 column pattern to share here and in space.ex -->
-          <div class="column is-1 has-text-centered"></div>
-          <div class="column is-10 has-text-centered">
-
-
-          <div class="box">
+        <div class="box">
           <div class="columns is-vcentered">
             <div class="column">
               <div
@@ -68,12 +62,6 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
               </div>
             <% end %>
           </div>
-          </div>
-
-
-
-          </div>
-          <div class="column is-1 has-text-centered"></div>
         </div>
       </div>
 

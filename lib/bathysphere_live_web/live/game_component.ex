@@ -28,7 +28,7 @@ defmodule BathysphereLiveWeb.GameComponent do
         <div class="column">
           <div class="rows">
             <div class"row">
-              <div class="rows dice-pool">
+              <div class="dice-pool">
                 <%= case @game_state.state do
                   :ok ->
                     live_component(@socket, BathysphereLiveWeb.Game.Map.DicePool, dice_pool: @game_state.resources.dice_pool)
