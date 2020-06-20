@@ -12,3 +12,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## References
 
 * https://phxroad.com/frontend/add-bulma-fontawesome-and-sass-to-phoenix-using-webpack
+* https://fontawesome.com/icons?d=gallery&q=up
+* https://bulma.io/documentation/
