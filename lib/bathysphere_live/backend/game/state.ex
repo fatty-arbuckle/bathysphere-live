@@ -2,6 +2,7 @@ defmodule BathysphereLive.Backend.Game.State do
 
   defstruct [
     state: :ok, # :no_map, :complete, :dead,
+    user: nil,
     map: [],
     position: 0,
     remaining: 0,
@@ -19,5 +20,12 @@ defmodule BathysphereLive.Backend.Game.State do
     fish_count: 0,
     octopus_count: 0
   ]
+
+  def new(user) do
+    %BathysphereLive.Backend.Game.State{
+      state: :no_map,
+      user: user
+    }
+  end
 
 end

@@ -3,12 +3,14 @@ defmodule BathysphereLiveWeb.PageLive do
 
 
   @impl true
-  def mount(_params, _session, socket) do
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
+  def mount(_params, session, socket) do
+    user = BathysphereLiveWeb.Restricted.Helper.get_user(session)
+    {_state, game_state} = BathysphereLive.Backend.Game.state(user)
     {
       :ok,
       assign(socket,
         game_state: game_state,
+        user: user,
         library: BathysphereLive.Backend.Library.Games.list()
       )
     }
@@ -47,8 +49,8 @@ defmodule BathysphereLiveWeb.PageLive do
       nil ->
         { :error, :game_not_found }
       game_state ->
-        BathysphereLive.Backend.Game.reset(game_state)
-        BathysphereLive.Backend.Game.state()
+        BathysphereLive.Backend.Game.reset(socket.assigns.user, game_state)
+        BathysphereLive.Backend.Game.state(socket.assigns.user)
     end
     {
       :noreply,
@@ -61,8 +63,8 @@ defmodule BathysphereLiveWeb.PageLive do
   end
   @impl true
   def handle_event("reset-game", _data, socket) do
-    BathysphereLive.Backend.Game.reset(%{ %BathysphereLive.Backend.Game.State{} | state: :no_map })
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    BathysphereLive.Backend.Game.reset(socket.assigns.user, %{ %BathysphereLive.Backend.Game.State{} | state: :no_map })
+    {_state, game_state} = BathysphereLive.Backend.Game.state(socket.assigns.user)
     {
       :noreply,
       assign(
@@ -75,8 +77,8 @@ defmodule BathysphereLiveWeb.PageLive do
   def handle_event("dice-pool-selection", %{ "number" => value, "index" => index, "direction" => direction }, socket) do
     {die, _} = Integer.parse(value)
     {idx, _} = Integer.parse(index)
-    move(die, idx, direction)
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    move(socket.assigns.user, die, idx, direction)
+    {_state, game_state} = BathysphereLive.Backend.Game.state(socket.assigns.user)
     {
       :noreply,
       assign(
@@ -86,8 +88,8 @@ defmodule BathysphereLiveWeb.PageLive do
     }
   end
   def handle_event("dice-pool-reroll", _data, socket) do
-    BathysphereLive.Backend.Game.reroll()
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    BathysphereLive.Backend.Game.reroll(socket.assigns.userx)
+    {_state, game_state} = BathysphereLive.Backend.Game.state(socket.assigns.user)
     {
       :noreply,
       assign(
@@ -98,8 +100,8 @@ defmodule BathysphereLiveWeb.PageLive do
   end
   def handle_event("select-option", %{ "resource" => resource, "cost" => cost, "used" => _used?, "index" => index }, socket) do
     {value, _} = Integer.parse(cost)
-    BathysphereLive.Backend.Game.select_action({{String.to_atom(resource), value, false}, index})
-    {_state, game_state} = BathysphereLive.Backend.Game.state()
+    BathysphereLive.Backend.Game.select_action(socket.assigns.user, {{String.to_atom(resource), value, false}, index})
+    {_state, game_state} = BathysphereLive.Backend.Game.state(socket.assigns.user)
     {
       :noreply,
       assign(
@@ -109,7 +111,7 @@ defmodule BathysphereLiveWeb.PageLive do
     }
   end
 
-  defp move(die, idx, "up"), do: BathysphereLive.Backend.Game.up(die, idx)
-  defp move(die, idx, "down"), do: BathysphereLive.Backend.Game.down(die, idx)
+  defp move(user, die, idx, "up"), do: BathysphereLive.Backend.Game.up(user, die, idx)
+  defp move(user, die, idx, "down"), do: BathysphereLive.Backend.Game.down(user, die, idx)
 
 end

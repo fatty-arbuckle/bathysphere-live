@@ -1,6 +1,8 @@
 defmodule BathysphereLiveWeb.Router do
   use BathysphereLiveWeb, :router
 
+  import BathysphereLiveWeb.Plugs.Session, only: [redirect_unauthorized: 2, validate_session: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,17 +10,33 @@ defmodule BathysphereLiveWeb.Router do
     plug :put_root_layout, {BathysphereLiveWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :validate_session
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  pipeline :restricted do
+    plug :browser
+    plug :redirect_unauthorized
+  end
+
   scope "/", BathysphereLiveWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", WelcomeLive, :index
+    get "/new-game", NewGameController, :index
+    get "/logout", LogoutController, :index
   end
+
+  scope "/", BathysphereLiveWeb do
+    pipe_through :restricted
+
+    live "/select", PageLive, :index
+    # live "/game/:game", GameLive, :index
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", BathysphereLiveWeb do
