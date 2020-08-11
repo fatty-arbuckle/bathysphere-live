@@ -14,7 +14,6 @@ defmodule BathysphereLiveWeb.WelcomeLive do
           class="button is-large is-bordered-text"
           has-tooltip-multiline
           data-tooltip="Start a new game"
-          phx-click="new-game"
         >
           <a href="/new-game" style="text-decoration: none;">New Game</a>
         </div>
