@@ -30,8 +30,8 @@ defmodule BathysphereLiveWeb.Game.Resources.Resource do
     |> String.capitalize
   end
 
-  defp text_color(nil), do: "has-text-success"
-  defp text_color(false), do: "has-text-danger"
-  defp text_color(true), do: "has-text-gray"
+  defp text_color(nil), do: "has-text-white"
+  defp text_color(false), do: "has-text-white"
+  defp text_color(true), do: "has-text-darkgrey"
 
 end

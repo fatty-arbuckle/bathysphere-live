@@ -3,7 +3,7 @@ defmodule BathysphereLiveWeb.Game.Control.Score do
 
   def render(assigns) do
     ~L"""
-      <div class="has-text-left">
+      <div class="box is-transparent has-text-left has-text-white">
         <div class="row">
           <div class="columns">
             <div class="column is-one-fifth">
@@ -20,6 +20,9 @@ defmodule BathysphereLiveWeb.Game.Control.Score do
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="box is-transparent has-text-left has-text-white">
         <div class="row">
           <div class="columns">
             <div class="column is-one-fifth">

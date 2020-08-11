@@ -3,7 +3,7 @@ defmodule BathysphereLiveWeb.Game.Map.Start do
 
   def render(assigns) do
     ~L"""
-      <div class="box">
+      <div class="box is-transparent has-text-white">
         <span class="is-size-3">
           <i class="fas fa-swimming-pool"></i>
         </span>

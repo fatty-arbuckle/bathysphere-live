@@ -11,7 +11,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
   def render(%{marked?: true} = assigns) do
     ~L"""
       <div
-        class="box <%= if @current?, do: "has-background-white", else: "has-background-grey" %>"
+        class="box is-less-transparent"
         has-tooltip-multiline
         data-tooltip="Marked space"
       >
@@ -20,7 +20,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
           <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Tracking, tracking: @tracking) %>
         <% end %>
 
-        <span class="is-size-3 <%= if @current?, do: "has-text-white", else: "has-text-grey" %>">
+        <span class="is-size-3 has-text-invisible">
           <i class="fas fa-cloud"></i>
         </span>
       </div>
@@ -29,7 +29,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
   def render(%{actions: []} = assigns) do
     ~L"""
     <div
-      class="box"
+      class="box is-transparent has-text-white"
       has-tooltip-multiline
       data-tooltip="Empty space"
     >
@@ -37,7 +37,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
         <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Tracking, tracking: @tracking) %>
       <% end %>
 
-      <span class="is-size-3 has-text-white">
+      <span class="is-size-3 has-text-invisible">
         <i class="fas fa-cloud"></i>
       </span>
     </div>
@@ -45,7 +45,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space do
   end
   def render(assigns) do
     ~L"""
-    <div class="box">
+    <div class="box is-transparent">
 
       <%= if !@current? do %>
         <%= live_component(@socket, BathysphereLiveWeb.Game.Map.Space.Tracking, tracking: @tracking) %>

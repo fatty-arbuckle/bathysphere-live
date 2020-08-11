@@ -4,16 +4,16 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
   def render(assigns) do
     ~L"""
       <div class="row">
-        <div class="box">
+        <div class="box is-transparent">
           <div class="columns is-vcentered">
             <div class="column">
               <div
-                class="button is-text"
+                class="button is-bordered-text"
                 has-tooltip-multiline
                 data-tooltip="Reroll your dice"
                 phx-click="dice-pool-reroll"
               >
-                <span class="is-size-1 has-text-info">
+                <span class="is-size-1 has-text-white">
                   <i class="fas fa-dice"></i>
                 </span>
               </div>
@@ -27,9 +27,9 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
                       phx-value-number="<%= value %>"
                       phx-value-index="<%= index %>"
                       phx-value-direction="up"
-                      class="button is-small is-primary is-light is-fullwidth has-text-success"
+                      class="<%= die_select_class(used?) %>"
                     <% else %>
-                      class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                      class="<%= die_select_class(used?) %>"
                       disabled
                     <% end %>
                   >
@@ -38,7 +38,7 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
                     </span>
                   </li>
                   <li>
-                    <span class="is-size-1 <%= if !used?, do: "has-text-success", else: "has-text-gray" %>">
+                    <span class="is-size-1 <%= if !used?, do: "has-text-white", else: "has-text-gray" %>">
                       <i class="fas <%= die(value) %>"></i>
                     </span>
                   </li>
@@ -48,9 +48,9 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
                       phx-value-number="<%= value %>"
                       phx-value-index="<%= index %>"
                       phx-value-direction="down"
-                      class="button is-small is-primary is-light is-fullwidth has-text-success"
+                      class="<%= die_select_class(used?) %>"
                     <% else %>
-                      class="button is-small is-primary is-light is-fullwidth has-text-gray"
+                      class="<%= die_select_class(used?) %>"
                       disabled
                     <% end %>
                   >
@@ -71,7 +71,11 @@ defmodule BathysphereLiveWeb.Game.Map.DicePool do
 
     """
   end
-  # <article class="message is-primary has-text-centered">
+
+  defp die_select_class(used?), do: "button is-small is-transparent is-fullwidth " <> die_select_color(used?)
+
+  defp die_select_color(false), do: "has-text-white"
+  defp die_select_color(true), do: "has-text-gray"
 
   defp die(1), do: "fa-dice-one"
   defp die(2), do: "fa-dice-two"

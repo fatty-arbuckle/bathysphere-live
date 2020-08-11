@@ -3,8 +3,8 @@ defmodule BathysphereLiveWeb.Game.Control.Resource do
 
   def render(assigns) do
     ~L"""
-    <div class="columns is-vcentered">
-      <div class="column has-text-left">
+    <div class="box is-transparent has-text-left">
+      <div class="row">
         <%= for %{type: type, used?: used?, penalties: penalties} <- @resource do %>
           <%=
             live_component(
@@ -36,9 +36,45 @@ defmodule BathysphereLiveWeb.Game.Control.Resource do
           <% end %>
         <% end %>
       </div>
-    </columns>
+    </div>
     """
   end
+
+
+    # <div class="columns is-vcentered">
+    #   <div class="column has-text-left">
+    #     <%= for %{type: type, used?: used?, penalties: penalties} <- @resource do %>
+    #       <%=
+    #         live_component(
+    #           @socket,
+    #           BathysphereLiveWeb.Game.Resources.Resource,
+    #           type: type,
+    #           value: nil,
+    #           used?: translate_used(used?),
+    #           size: "is-size-3"
+    #         )
+    #       %>
+    #       <%= for penalty <- penalties do %>
+    #         <span class="is-size-3">
+    #           (
+    #         </span>
+    #         <%=
+    #           live_component(
+    #             @socket,
+    #             BathysphereLiveWeb.Game.Resources.Resource,
+    #             type: penalty,
+    #             value: -1,
+    #             used?: translate_used(used?),
+    #             size: "is-size-3"
+    #           )
+    #         %>
+    #         <span class="is-size-3">
+    #           )
+    #         </span>
+    #       <% end %>
+    #     <% end %>
+    #   </div>
+    # </columns>
 
   # A false will render the wrong color, we need a nil
   defp translate_used(true), do: true

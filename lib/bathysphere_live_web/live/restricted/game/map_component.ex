@@ -14,7 +14,7 @@ defmodule BathysphereLiveWeb.Game.MapComponent do
             <div class="column is-1 has-text-centered"></div>
             <div class="column is-10 has-text-centered">
               <%= if idx == @position do %>
-                <div class="box has-background-info">
+                <div class="box has-background-white">
               <% end %>
 
               <%= case type do

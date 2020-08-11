@@ -88,7 +88,7 @@ defmodule BathysphereLiveWeb.PageLive do
     }
   end
   def handle_event("dice-pool-reroll", _data, socket) do
-    BathysphereLive.Backend.Game.reroll(socket.assigns.userx)
+    BathysphereLive.Backend.Game.reroll(socket.assigns.user)
     {_state, game_state} = BathysphereLive.Backend.Game.state(socket.assigns.user)
     {
       :noreply,

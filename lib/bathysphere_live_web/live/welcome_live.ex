@@ -10,7 +10,15 @@ defmodule BathysphereLiveWeb.WelcomeLive do
   def render(assigns) do
     ~L"""
       <h1 class="title">
-        <a href="/new-game">New Game</a>
+        <div
+          class="button is-large is-bordered-text"
+          has-tooltip-multiline
+          data-tooltip="Start a new game"
+          phx-click="new-game"
+        >
+          <a href="/new-game" style="text-decoration: none;">New Game</a>
+        </div>
+
       </h1>
     """
   end

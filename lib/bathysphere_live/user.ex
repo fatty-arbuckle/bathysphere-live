@@ -35,7 +35,7 @@ defmodule BathysphereLive.User do
     Church Knife Spoon Crayon Lamp Stone Crowd Lawyer Sugar Daughter Leather Sweden
     Death Library Teacher Denmark Lighter Telephone Diamond Lion Television Dinner Lizard Tent
     Disease Lock Thailand Doctor London Tomato Dog Lunch Toothbrush Dream Machine Traffic
-    Dress Magazine Train Easter Magician Truck Egg Manchester Uganda Eggplant Market Umbrella
+    Dress Magazine Train Magician Truck Egg Manchester Uganda Eggplant Market Umbrella
     Egypt Match Van Elephant Microphone Vase Energy Monkey Vegetable Engine Morning Vulture
     England Motorcycle Wall Evening Nail Whale Eye Napkin Window Family Needle Wire
     Finland Nest Xylophone Fish Nigeria Yacht Flag Night Yak Flower Notebook Zebra
