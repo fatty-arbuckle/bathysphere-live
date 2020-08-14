@@ -3,7 +3,7 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
 
   def render(assigns) do
     ~L"""
-      <div class="box">
+      <div class="box is-transparent has-text-white">
         <div class="">
           <span class="has-text-left">
             Make a Selection
@@ -17,7 +17,7 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
             <%= for {{resource, cost, used?}, index} <- @choices do %>
               <div class="column">
                 <ul>
-                  <li class="button is-small is-text is-fullwidth"></li>
+                  <li class="button is-small is-text is-fullwidth" disabled></li>
                   <li>
                     <div
                       phx-click="select-option"
@@ -38,7 +38,7 @@ defmodule BathysphereLiveWeb.Game.Control.Selection do
                       %>
                     </button>
                   </li>
-                  <li class="button is-small is-text is-fullwidth"></li>
+                  <li class="button is-small is-text is-fullwidth" disabled></li>
                 </ul>
               </div>
             <% end %>

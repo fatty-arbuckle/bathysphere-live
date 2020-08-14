@@ -17,7 +17,7 @@ defmodule BathysphereLiveWeb.Game.Map.Space.Damage do
   end
 
   def text_color(nil), do: "has-text-success"
-  def text_color(false), do: "has-text-danger"
+  def text_color(false), do: "has-text-white"
   def text_color(true), do: "has-text-gray"
 
 end
